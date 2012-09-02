@@ -10770,19 +10770,8 @@ a:hover,
 a:visited {
   color: #08c;
 }
-#create-view {
-  margin: 20px;
-}
-#create-view #config {
-  width: 600px;
-  height: 400px;
-}
-#create-view #create-wrap {
-  width: 100%;
-  margin-top: 10px;
-}
-#create-view #create-wrap #create-inner {
-  margin: 0 auto;
+li {
+  list-style: none;
 }
 #create-view {
   margin: 20px;
@@ -10797,6 +10786,46 @@ a:visited {
 }
 #create-view #create-wrap #create-inner {
   margin: 0 auto;
+}
+#index-view {
+  width: 100%;
+}
+#list {
+  width: 950px;
+  margin: 0 auto;
+}
+#list table {
+  margin: 80px 0;
+}
+#list table td span.criteria {
+  display: block;
+}
+#create-view {
+  margin: 20px;
+}
+#create-view #config {
+  width: 600px;
+  height: 400px;
+}
+#create-view #create-wrap {
+  width: 100%;
+  margin-top: 10px;
+}
+#create-view #create-wrap #create-inner {
+  margin: 0 auto;
+}
+#index-view {
+  width: 100%;
+}
+#list {
+  width: 950px;
+  margin: 0 auto;
+}
+#list table {
+  margin: 80px 0;
+}
+#list table td span.criteria {
+  display: block;
 }
 .main-page {
   min-width: 950px;
@@ -10847,6 +10876,9 @@ a:hover,
 a:visited {
   color: #08c;
 }
+li {
+  list-style: none;
+}
 #header-wrap {
   height: 225px;
 }
@@ -10885,6 +10917,19 @@ a:visited {
 }
 #create-view #create-wrap #create-inner {
   margin: 0 auto;
+}
+#index-view {
+  width: 100%;
+}
+#list {
+  width: 950px;
+  margin: 0 auto;
+}
+#list table {
+  margin: 80px 0;
+}
+#list table td span.criteria {
+  display: block;
 }
 .main-page {
   min-width: 950px;

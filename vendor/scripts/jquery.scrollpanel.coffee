@@ -8,7 +8,7 @@
         animate: undefined
         scrollContainer: $(window)
         heightOffset: 100 + ($('footer').outerHeight() or 0)
-        minWidth: 1080
+        minWidth: 950
 
         top: ($el, options) ->
             $el.offset().top - (options.threshold $el, options)

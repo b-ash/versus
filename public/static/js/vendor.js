@@ -15574,7 +15574,7 @@ jQuery.effects||function(a,b){function c(b){var c;return b&&b.constructor==Array
     animate: void 0,
     scrollContainer: $(window),
     heightOffset: 100 + ($('footer').outerHeight() || 0),
-    minWidth: 1080,
+    minWidth: 950,
     top: function($el, options) {
       return $el.offset().top - (options.threshold($el, options));
     },

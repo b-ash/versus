@@ -1,0 +1,34 @@
+<div class="logo {{name}}"></div>
+
+<div class="battle-description">
+    <p>{{description}}</p>
+</div>
+
+<table class="battle">
+    <thead>
+        <tr>
+            <td>Category</td>
+            {{#each contenders}}
+            <td class="contender">{{name}}</td>
+            {{/each}}
+        </tr>
+    <tbody>
+        {{#keys criteria contenders}}
+        <tr>
+            <td>
+                <span class="criteria name">{{key}}</span>
+                <span class="criteria desc">{{value}}</span>
+            </td>
+            {{#pluck_criteria ctx key}}
+            <td>{{val}}</td>
+            {{/pluck_criteria}}
+        </tr>
+        {{/keys}}
+    </tbody>
+</table>
+
+{{#each explanations}}
+<div class="explanation">
+    <span>{{name}}</span>
+    <p>{{review}}</p>
+{{/each}}

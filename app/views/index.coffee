@@ -10,8 +10,6 @@ class IndexView extends View
         @collection = new Battles()
         @collection.fetch 
             success: (data, textstatus, xhr) =>
-                console.log 'Shit worked'
-                console.log data
                 @render()
             error: ->
                 console.log 'Something happened fetching battles'
@@ -39,21 +37,21 @@ class IndexView extends View
                     $el.removeClass 'floating'
 
     initBattles: (args) =>
+        console.log @collection.toJSON()
         @collection.each (battle) =>
-            console.log @collection.toJSON()
             view = new BattleView {model: battle}
             app.views.indexView.views.push view
-            view.render()
+            @$('#list').append view.render().el
         @
 
 
 class BattleView extends View
     tagName: 'li'
     tagClass: 'battle'
-    template: require './templates/battles/pizza'
+    template: require './templates/battle'
 
     getRenderData: =>
-        return @model.toJSON()
+        @model.toJSON()
 
 
 module.exports = IndexView

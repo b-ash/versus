@@ -236,14 +236,56 @@ window.require.define({"lib/view_helper": function(exports, require, module) {
     }
   });
 
-  Handlebars.registerHelper("keys", function(obj, fn) {
-    var buffer, key;
+  Handlebars.registerHelper("keys", function(list, ctx, fn) {
+    var buffer, el, key, val, _i, _len;
     buffer = '';
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) {
+    for (_i = 0, _len = list.length; _i < _len; _i++) {
+      el = list[_i];
+      for (key in el) {
+        val = el[key];
+        if (el.hasOwnProperty(key)) {
+          buffer += fn({
+            key: key,
+            value: el[key],
+            ctx: ctx
+          });
+        }
+      }
+    }
+    return buffer;
+  });
+
+  Handlebars.registerHelper('pluck_criteria', function(list, key, fn) {
+    var buffer, criteria, el, k, v, _i, _j, _len, _len1, _ref;
+    buffer = '';
+    for (_i = 0, _len = list.length; _i < _len; _i++) {
+      el = list[_i];
+      _ref = el.criteria;
+      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+        criteria = _ref[_j];
+        for (k in criteria) {
+          v = criteria[k];
+          if (k === key) {
+            buffer += fn({
+              val: v
+            });
+          }
+        }
+      }
+    }
+    return buffer;
+  });
+
+  Handlebars.registerHelper('pluck', function(list, fn) {
+    var buffer, el, k, v, _i, _len;
+    buffer = '';
+    for (_i = 0, _len = list.length; _i < _len; _i++) {
+      el = list[_i];
+      for (k in el) {
+        v = el[k];
         buffer += fn({
-          key: key,
-          value: obj[key]
+          key: k,
+          val: v
         });
       }
     }
@@ -416,8 +458,6 @@ window.require.define({"views/index": function(exports, require, module) {
       this.collection = new Battles();
       return this.collection.fetch({
         success: function(data, textstatus, xhr) {
-          console.log('Shit worked');
-          console.log(data);
           return _this.render();
         },
         error: function() {
@@ -458,14 +498,14 @@ window.require.define({"views/index": function(exports, require, module) {
 
     IndexView.prototype.initBattles = function(args) {
       var _this = this;
+      console.log(this.collection.toJSON());
       this.collection.each(function(battle) {
         var view;
-        console.log(_this.collection.toJSON());
         view = new BattleView({
           model: battle
         });
         app.views.indexView.views.push(view);
-        return view.render();
+        return _this.$('#list').append(view.render().el);
       });
       return this;
     };
@@ -487,7 +527,7 @@ window.require.define({"views/index": function(exports, require, module) {
 
     BattleView.prototype.tagClass = 'battle';
 
-    BattleView.prototype.template = require('./templates/battles/pizza');
+    BattleView.prototype.template = require('./templates/battle');
 
     BattleView.prototype.getRenderData = function() {
       return this.model.toJSON();
@@ -501,68 +541,123 @@ window.require.define({"views/index": function(exports, require, module) {
   
 }});
 
-window.require.define({"views/templates/battles/pizza": function(exports, require, module) {
+window.require.define({"views/templates/battle": function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, stack2, stack3, stack4, foundHelper, tmp1, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression, blockHelperMissing=helpers.blockHelperMissing;
+    var buffer = "", stack1, stack2, stack3, foundHelper, tmp1, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression, blockHelperMissing=helpers.blockHelperMissing;
 
   function program1(depth0,data) {
     
     var buffer = "", stack1;
-    buffer += "\n            <td>";
-    foundHelper = helpers.contender;
-    stack1 = foundHelper || depth0.contender;
-    stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.name);
+    buffer += "\n            <td class=\"contender\">";
+    foundHelper = helpers.name;
+    stack1 = foundHelper || depth0.name;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "contender.name", { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
     buffer += escapeExpression(stack1) + "</td>\n            ";
     return buffer;}
 
   function program3(depth0,data) {
     
-    var buffer = "", stack1;
-    buffer += "\n        <tr>\n            <td class=\"";
+    var buffer = "", stack1, stack2, stack3;
+    buffer += "\n        <tr>\n            <td>\n                <span class=\"criteria name\">";
     foundHelper = helpers.key;
     stack1 = foundHelper || depth0.key;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "key", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "\">";
+    buffer += escapeExpression(stack1) + "</span>\n                <span class=\"criteria desc\">";
+    foundHelper = helpers.value;
+    stack1 = foundHelper || depth0.value;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "value", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</span>\n            </td>\n            ";
+    foundHelper = helpers.key;
+    stack1 = foundHelper || depth0.key;
+    foundHelper = helpers.ctx;
+    stack2 = foundHelper || depth0.ctx;
+    foundHelper = helpers.pluck_criteria;
+    stack3 = foundHelper || depth0.pluck_criteria;
+    tmp1 = self.program(4, program4, data);
+    tmp1.hash = {};
+    tmp1.fn = tmp1;
+    tmp1.inverse = self.noop;
+    if(foundHelper && typeof stack3 === functionType) { stack1 = stack3.call(depth0, stack2, stack1, tmp1); }
+    else { stack1 = blockHelperMissing.call(depth0, stack3, stack2, stack1, tmp1); }
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n        </tr>\n        ";
+    return buffer;}
+  function program4(depth0,data) {
+    
+    var buffer = "", stack1;
+    buffer += "\n            <td>";
     foundHelper = helpers.val;
     stack1 = foundHelper || depth0.val;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "val", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</td>\n        </tr>\n        ";
+    buffer += escapeExpression(stack1) + "</td>\n            ";
     return buffer;}
 
-    buffer += "<table class=\"battle\">\n    <thead>\n        <tr>\n            ";
+  function program6(depth0,data) {
+    
+    var buffer = "", stack1;
+    buffer += "\n<div class=\"explanation\">\n    <span>";
+    foundHelper = helpers.name;
+    stack1 = foundHelper || depth0.name;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</span>\n    <p>";
+    foundHelper = helpers.review;
+    stack1 = foundHelper || depth0.review;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "review", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</p>\n";
+    return buffer;}
+
+    buffer += "<div class=\"logo ";
+    foundHelper = helpers.name;
+    stack1 = foundHelper || depth0.name;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "\"></div>\n\n<div class=\"battle-description\">\n    <p>";
+    foundHelper = helpers.description;
+    stack1 = foundHelper || depth0.description;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "description", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</p>\n</div>\n\n<table class=\"battle\">\n    <thead>\n        <tr>\n            <td>Category</td>\n            ";
     foundHelper = helpers.contenders;
     stack1 = foundHelper || depth0.contenders;
-    foundHelper = helpers['in'];
-    stack2 = foundHelper || depth0['in'];
-    foundHelper = helpers.contender;
-    stack3 = foundHelper || depth0.contender;
-    foundHelper = helpers['for'];
-    stack4 = foundHelper || depth0['for'];
+    stack2 = helpers.each;
     tmp1 = self.program(1, program1, data);
     tmp1.hash = {};
     tmp1.fn = tmp1;
     tmp1.inverse = self.noop;
-    if(foundHelper && typeof stack4 === functionType) { stack1 = stack4.call(depth0, stack3, stack2, stack1, tmp1); }
-    else { stack1 = blockHelperMissing.call(depth0, stack4, stack3, stack2, stack1, tmp1); }
+    stack1 = stack2.call(depth0, stack1, tmp1);
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n        </tr>\n    <tbody>\n         ";
+    buffer += "\n        </tr>\n    <tbody>\n        ";
     foundHelper = helpers.contenders;
     stack1 = foundHelper || depth0.contenders;
+    foundHelper = helpers.criteria;
+    stack2 = foundHelper || depth0.criteria;
     foundHelper = helpers.keys;
-    stack2 = foundHelper || depth0.keys;
+    stack3 = foundHelper || depth0.keys;
     tmp1 = self.program(3, program3, data);
     tmp1.hash = {};
     tmp1.fn = tmp1;
     tmp1.inverse = self.noop;
-    if(foundHelper && typeof stack2 === functionType) { stack1 = stack2.call(depth0, stack1, tmp1); }
-    else { stack1 = blockHelperMissing.call(depth0, stack2, stack1, tmp1); }
+    if(foundHelper && typeof stack3 === functionType) { stack1 = stack3.call(depth0, stack2, stack1, tmp1); }
+    else { stack1 = blockHelperMissing.call(depth0, stack3, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n    </tbody>\n</table>\n";
+    buffer += "\n    </tbody>\n</table>\n\n";
+    foundHelper = helpers.explanations;
+    stack1 = foundHelper || depth0.explanations;
+    stack2 = helpers.each;
+    tmp1 = self.program(6, program6, data);
+    tmp1.hash = {};
+    tmp1.fn = tmp1;
+    tmp1.inverse = self.noop;
+    stack1 = stack2.call(depth0, stack1, tmp1);
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n";
     return buffer;});
 }});
 
@@ -581,7 +676,7 @@ window.require.define({"views/templates/index": function(exports, require, modul
     var foundHelper, self=this;
 
 
-    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">Coming soon!</div>\n<div id=\"list\"></div>\n";});
+    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n";});
 }});
 
 window.require.define({"views/view": function(exports, require, module) {
