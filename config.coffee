@@ -14,6 +14,7 @@ exports.config =
                     'vendor/scripts/jquery.js'
                     'vendor/scripts/jquery-ui-1.8.20.js'
                     'vendor/scripts/jquery.blockui.js'
+                    'vendor/scripts/jquery.scrollpanel.js'
                     'vendor/scripts/underscore.js'
                     'vendor/scripts/backbone.js'
                     'vendor/scripts/chosen.jquery.js'

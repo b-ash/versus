@@ -165,7 +165,7 @@ window.require.define({"initialize": function(exports, require, module) {
 }});
 
 window.require.define({"lib/router": function(exports, require, module) {
-  var IndexView, Router, app, utils,
+  var CreateView, IndexView, Router, app, utils,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -176,21 +176,45 @@ window.require.define({"lib/router": function(exports, require, module) {
 
   IndexView = require('views/index');
 
+  CreateView = require('views/create');
+
   module.exports = Router = (function(_super) {
 
     __extends(Router, _super);
 
     function Router() {
+      this._closeViews = __bind(this._closeViews, this);
+
+      this.create = __bind(this.create, this);
+
       this.index = __bind(this.index, this);
       return Router.__super__.constructor.apply(this, arguments);
     }
 
     Router.prototype.routes = {
-      '': 'index'
+      '': 'index',
+      'create': 'create'
     };
 
     Router.prototype.index = function() {
-      return this.indexView = new IndexView();
+      this._closeViews();
+      return app.views.indexView = new IndexView();
+    };
+
+    Router.prototype.create = function() {
+      this._closeViews();
+      return app.views.createView = new CreateView();
+    };
+
+    Router.prototype._closeViews = function() {
+      var key, view, _ref;
+      _ref = app.views;
+      for (key in _ref) {
+        view = _ref[key];
+        delete app.views[key];
+        view.close();
+      }
+      return this;
     };
 
     return Router;
@@ -222,6 +246,7 @@ window.require.define({"lib/view_helper": function(exports, require, module) {
 
 window.require.define({"models/battle": function(exports, require, module) {
   var Battle, Model,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -232,14 +257,26 @@ window.require.define({"models/battle": function(exports, require, module) {
     __extends(Battle, _super);
 
     function Battle() {
+      this.initialize = __bind(this.initialize, this);
       return Battle.__super__.constructor.apply(this, arguments);
     }
+
+    Battle.prototype.url = 'api/v1/create/';
 
     Battle.prototype.defaults = function() {
       return {
         name: 'Unknown',
-        criteria: []
+        contenders: [],
+        winner: 'Unknown',
+        explanations: {
+          bash: 'Not disclosed',
+          jay: 'Not disclosed'
+        }
       };
+    };
+
+    Battle.prototype.initialize = function(args) {
+      return console.log(args);
     };
 
     return Battle;
@@ -311,6 +348,69 @@ window.require.define({"views/404": function(exports, require, module) {
   
 }});
 
+window.require.define({"views/create": function(exports, require, module) {
+  var Battle, CreateView, View, app,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  app = require('application');
+
+  View = require('./view');
+
+  Battle = require('models/battle');
+
+  CreateView = (function(_super) {
+
+    __extends(CreateView, _super);
+
+    function CreateView() {
+      this.create = __bind(this.create, this);
+
+      this.afterRender = __bind(this.afterRender, this);
+
+      this.initialize = __bind(this.initialize, this);
+      return CreateView.__super__.constructor.apply(this, arguments);
+    }
+
+    CreateView.prototype.el = '.main-page';
+
+    CreateView.prototype.template = require('./templates/create');
+
+    CreateView.prototype.events = {
+      'click #create': 'create'
+    };
+
+    CreateView.prototype.initialize = function() {
+      return this.render();
+    };
+
+    CreateView.prototype.afterRender = function() {
+      return this.$('#config').text("{\n    \"name\": \"<BATTLE NAME>\",\n    \"criteria\": [\n        {\"<CRITERIA NAME>\": \"<DESCRIPTION OF CRITERIA>\"}\n    ],\n    \"contenders\": [\n        {\n            \"name\": \"<CONTENDER NAME>\",\n            \"criteria\": [\n                {\"<CRITERIA NAME>\": <RATING>}\n            ]\n        }\n    ],\n    \"winner\": \"<WINNER NAME>\",\n    \"explanation\": [\n        {\"bash\": \"<EXPLANATION>\"},\n        {\"jay\": \"<EXPLANATION>\"}\n    ]\n}");
+    };
+
+    CreateView.prototype.create = function(event) {
+      var battle, json;
+      event.preventDefault();
+      event.stopPropagation();
+      json = JSON.parse(this.$('#config').val());
+      battle = new Battle(json);
+      console.log(battle);
+      return battle.save({
+        success: function() {
+          return console.log("S'all good bro, save complete");
+        }
+      });
+    };
+
+    return CreateView;
+
+  })(View);
+
+  module.exports = CreateView;
+  
+}});
+
 window.require.define({"views/index": function(exports, require, module) {
   var IndexView, View,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
@@ -324,6 +424,8 @@ window.require.define({"views/index": function(exports, require, module) {
     __extends(IndexView, _super);
 
     function IndexView() {
+      this.afterRender = __bind(this.afterRender, this);
+
       this.initialize = __bind(this.initialize, this);
       return IndexView.__super__.constructor.apply(this, arguments);
     }
@@ -336,6 +438,29 @@ window.require.define({"views/index": function(exports, require, module) {
       return this.render();
     };
 
+    IndexView.prototype.afterRender = function() {
+      $('#header').scrollPanel({
+        topPadding: -109,
+        change: function(type, $el) {
+          if (type === 'fixed') {
+            return $el.addClass('floating');
+          } else {
+            return $el.removeClass('floating');
+          }
+        }
+      });
+      return $('#header-graphic').scrollPanel({
+        topPadding: -109,
+        change: function(type, $el) {
+          if (type === 'fixed') {
+            return $el.addClass('floating');
+          } else {
+            return $el.removeClass('floating');
+          }
+        }
+      });
+    };
+
     return IndexView;
 
   })(View);
@@ -344,13 +469,22 @@ window.require.define({"views/index": function(exports, require, module) {
   
 }});
 
+window.require.define({"views/templates/create": function(exports, require, module) {
+  module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+    helpers = helpers || Handlebars.helpers;
+    var foundHelper, self=this;
+
+
+    return "<div id=\"create-view\">\n    <div class=\"title\">\n        <h1>Create yo shiz</h1>\n        <h3>It better be proper JSON...</h3>\n    </div>\n\n    <textarea id=\"config\" rows=\"10\" />\n    <div id=\"create-wrap\">\n        <div id=\"create-inner\">\n            <a id=\"create\" class=\"btn-primary btn-large\" href=\"#\" >Create</a>\n        </div>\n    </div>\n</div>";});
+}});
+
 window.require.define({"views/templates/index": function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     helpers = helpers || Handlebars.helpers;
     var foundHelper, self=this;
 
 
-    return "<div id=\"index-view\">Coming soon!</div>\n";});
+    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">Coming soon!</div>\n<br /><br />\n<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><span>A lot of content</span>";});
 }});
 
 window.require.define({"views/view": function(exports, require, module) {

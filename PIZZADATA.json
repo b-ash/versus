@@ -1,0 +1,46 @@
+{
+    "name":"deep-dish-pizza",
+    "contenders":[
+        {
+            "name":"Lou Malnati's",
+            "criteria":[
+                {"Crust":8},
+                {"Cheese":7},
+                {"Toppings":8},
+                {"Sauce":7},
+                {"Presentation":7},
+                {"Beer Selection":3},
+                {"Atmosphere":9},
+                {"Quality":8}
+            ]
+        },
+        {
+            "name":"Giordano's",
+            "criteria":[
+                {"Crust":5},
+                {"Cheese":8},
+                {"Toppings":6},
+                {"Sauce":4},
+                {"Presentation":5},
+                {"Beer Selection":4},
+                {"Atmosphere":3},
+                {"Quality":6}
+            ]
+        }
+    ],
+    "criteria":[
+        {"Crust":"Flavor, Texture - is it crispy / burnt / too thin?"},
+        {"Cheese":"Flavor, Amount - too much / little?"},
+        {"Toppings":"Flavor, Intregration - how well it mix? Amount - too much / little?"},
+        {"Sauce":"Flavor, Amount - too much / little?"},
+        {"Presentation":"How did the menu look? How did the food look?"},
+        {"Beer Selection":"You need beer; It's important - did they have 312?"},
+        {"Atmosphere":"Restaurant setup / feel, How was the waiter / waitress?"},
+        {"Quality":"Overall pizza-eating experience"}
+    ],
+    "winner":"Lou Malnati's",
+    "explanations":[
+        {"bash":"It's interesting how different these restaurants differ. Lou's was killer - Joey D rapped / sang, the building was really nice with tons of sports paraphernalia around, and it didn't feel like I was in a chain. Walking into Giordano's was disappointing; I felt like I was in a place that was just as likely to be in Boston. Lou's pizza looked awesome, and so did Giordano's. The deciding factors came down to the sauce and presentation. The sauce at Giordano's literally tasted like Ragu - gross! It blended well, but on it's own was not very appetizing. Lou's was very tasty. At Giordano's, we had to wait ~10 minutes between each waitress interaction; at Lou's, our waiter came by more frequently (if only to rap). Overall, Lou's was absolutely my favorite. That being said, Giordano's had good pizza. If you only had a lunch break within the loop and you didn't have time to make the wait at Lou's plus the 20 minute trip out there, Giordano's would still be a solid choice."},
+        {"jay":""}
+    ]
+}

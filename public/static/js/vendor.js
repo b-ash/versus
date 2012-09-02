@@ -15564,3 +15564,90 @@ jQuery.effects||function(a,b){function c(b){var c;return b&&b.constructor==Array
 * Copyright (c) 2012 AUTHORS.txt; Licensed MIT, GPL */
 (function(a,b){a.effects.transfer=function(b){return this.queue(function(){var c=a(this),d=a(b.options.to),e=d.offset(),f={top:e.top,left:e.left,height:d.innerHeight(),width:d.innerWidth()},g=c.offset(),h=a('<div class="ui-effects-transfer"></div>').appendTo(document.body).addClass(b.options.className).css({top:g.top,left:g.left,height:c.innerHeight(),width:c.innerWidth(),position:"absolute"}).animate(f,b.duration,b.options.easing,function(){h.remove(),b.callback&&b.callback.apply(c[0],arguments),c.dequeue()})})}})(jQuery);;;
 
+
+(function($) {
+  var defaults, methods, pluginName;
+  pluginName = 'scrollPanel';
+  defaults = {
+    buffer: $.browser.webkit ? 0 : 50,
+    topPadding: 20,
+    animate: void 0,
+    scrollContainer: $(window),
+    heightOffset: 100 + ($('footer').outerHeight() || 0),
+    minWidth: 1080,
+    top: function($el, options) {
+      return $el.offset().top - (options.threshold($el, options));
+    },
+    threshold: function($el, options) {
+      return $el.offset().top - parseFloat($el.css('marginTop').replace('auto', 0)) - (parseFloat($('#hsnavigation, #nav.failure').outerHeight()) || 0) - options.topPadding;
+    },
+    thresholdCheck: function($el, options) {
+      var scrollTop;
+      scrollTop = options.scrollContainer.scrollTop();
+      if (scrollTop >= options.cached.threshold && options.scrollContainer.height() > ($el.outerHeight() + options.heightOffset) && Math.max(options.scrollContainer.width(), options.scrollContainer.outerWidth()) > options.minWidth) {
+        return options.setFixed($el, options);
+      } else {
+        return options.setStatic($el, options);
+      }
+    },
+    setFixed: function($el, options) {
+      $el.css('position', 'fixed');
+      return options.change('fixed', $el, options);
+    },
+    setStatic: function($el, options) {
+      $el.css('position', 'static');
+      return options.change('static', $el, options);
+    },
+    change: function() {}
+  };
+  methods = {
+    init: function(opts) {
+      return this.each(function() {
+        var $el, options;
+        $el = $(this);
+        options = $.extend(true, {}, defaults, opts);
+        $el.data(pluginName, options);
+        options.cached = {};
+        options.cached.top = typeof options.top === 'number' ? options.top : options.top($el, options);
+        options.cached.threshold = typeof options.threshold === 'number' ? options.threshold : options.threshold($el, options);
+        return $el[pluginName]('setupEvents');
+      });
+    },
+    setupEvents: function() {
+      var $el, lastScroll, options,
+        _this = this;
+      $el = $(this);
+      options = $el.data(pluginName);
+      lastScroll = null;
+      $el.css('top', options.cached.top);
+      this.onScroll = function(e) {
+        if (lastScroll && (+new Date()) - lastScroll < options.buffer) {
+          if (!_this.scrollTimeout) {
+            _this.scrollTimeout = setTimeout(_this.onScroll, options.buffer);
+          }
+          return;
+        }
+        clearTimeout(_this.scrollTimeout);
+        _this.scrollTimeout = null;
+        lastScroll = +new Date();
+        options.thresholdCheck($el, options);
+        if (options.animate) {
+          return options.animate(e, $el, options);
+        }
+      };
+      options.scrollContainer.bind('scroll resize', this.onScroll);
+      return $el;
+    }
+  };
+  return $.fn[pluginName] = function(options) {
+    if (methods[options]) {
+      return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+    } else if (typeof options === 'object' || !options) {
+      return methods.init.apply(this, arguments);
+    } else {
+      return $.error("jQuery." + pluginName + ": Method " + options + " does not exist");
+    }
+  };
+})(jQuery);
+;
+

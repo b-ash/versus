@@ -23,6 +23,8 @@ exports.startServer = (port, path, callback) ->
 
     # Serve our static assets
     app.use express.static("#{__dirname}/#{path}")
+    app.get "/create", (req, res) ->
+        res.sendfile "#{__dirname}/#{path}/index.html"
 
     api = new Db().init app
 

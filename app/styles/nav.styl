@@ -1,28 +1,23 @@
-#nav
-    .container 
-        margin: 0 20px
-        
-        .brand
-            font-weight: bold
-            font-size: 25px
-            padding: 10px 20px
+#header-wrap 
+    height: 225px
+    
+    #header
+        background-image: url('/static/images/header_bkgd.png')
+        width: 100%
+        height: 150px
+        float: left
 
-        a
-            font-family: 'Comfortaa', 'helvetica'
+    #header-graphic-wrap
+        position: relative
+        background-repeat: no-repeat 
+        background-position: center
+        width: 100%
 
-        li a
-            font-size: 18px
-            margin-top: 2px
-        
-        .right a:hover
-            cursor: pointer
-            text-decoration: underline
+    #header-graphic
+        background: transparent url('/static/images/header_graphic.png')
+        width: 950px
+        height: 225px
+        margin: 0 auto
 
-            a
-                font-weight: bold
-                font-size: 15px
-                line-height: 40px 
-                text-decoration: none
-        
-        .link-divider
-            padding: 0 5px
+        &.floating
+            left: 9%
