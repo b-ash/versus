@@ -10825,7 +10825,8 @@ a:visited {
   margin: 0 auto;
 }
 #header-wrap #header-graphic.floating {
-  left: 9%;
+  left: 50%;
+  margin-left: -475px;
 }
 .clear {
   clear: both;
@@ -10846,33 +10847,30 @@ a:hover,
 a:visited {
   color: #08c;
 }
-#header {
+#header-wrap {
+  height: 225px;
+}
+#header-wrap #header {
   background-image: url("/static/images/header_bkgd.png");
   width: 100%;
   height: 150px;
   float: left;
 }
-#header-graphic-wrap {
+#header-wrap #header-graphic-wrap {
   position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
   width: 100%;
 }
-#header-graphic-wrap.floating {
-  -webkit-box-shadow: inset 0px 0px 0px 1px rgba(195,195,195,0.5), 0px 2px 9px rgba(0,0,0,0.2);
-  -moz-box-shadow: inset 0px 0px 0px 1px rgba(195,195,195,0.5), 0px 2px 9px rgba(0,0,0,0.2);
-  box-shadow: inset 0px 0px 0px 1px rgba(195,195,195,0.5), 0px 2px 9px rgba(0,0,0,0.2);
-  -webkit-border-radius: 0px 0px 7px 7px;
-  -moz-border-radius: 0px 0px 7px 7px;
-  -ms-border-radius: 0px 0px 7px 7px;
-  -o-border-radius: 0px 0px 7px 7px;
-  border-radius: 0px 0px 7px 7px;
-  opacity: 0.92;
-}
-#header-graphic-wrap #header-graphic {
-  background-image: url("/static/images/header_graphic.png");
+#header-wrap #header-graphic {
+  background: transparent url("/static/images/header_graphic.png");
   width: 950px;
   height: 225px;
-  top: -30px;
   margin: 0 auto;
+}
+#header-wrap #header-graphic.floating {
+  left: 50%;
+  margin-left: -475px;
 }
 #create-view {
   margin: 20px;
