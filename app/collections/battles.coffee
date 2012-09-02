@@ -3,11 +3,8 @@ Battle = require '../models/battle'
 
 
 class Battles extends Collection
-    baseUrl: 'battle/'
+    url: 'api/v1/battles/'
     model: Battle
-
-    initialize: =>
-        @url = "#{@baseUrl}#{@battle}"
 
 
 module.exports = Battles

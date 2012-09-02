@@ -11,8 +11,5 @@ class Battle extends Model
             bash: 'Not disclosed'
             jay: 'Not disclosed'
 
-    initialize: (args) =>
-        console.log args
-
 
 module.exports = Battle

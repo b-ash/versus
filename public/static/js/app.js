@@ -97,7 +97,6 @@ window.require.define({"application": function(exports, require, module) {
 
 window.require.define({"collections/battles": function(exports, require, module) {
   var Battle, Battles, Collection,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -110,17 +109,12 @@ window.require.define({"collections/battles": function(exports, require, module)
     __extends(Battles, _super);
 
     function Battles() {
-      this.initialize = __bind(this.initialize, this);
       return Battles.__super__.constructor.apply(this, arguments);
     }
 
-    Battles.prototype.baseUrl = 'battle/';
+    Battles.prototype.url = 'api/v1/battles/';
 
     Battles.prototype.model = Battle;
-
-    Battles.prototype.initialize = function() {
-      return this.url = "" + this.baseUrl + this.battle;
-    };
 
     return Battles;
 
@@ -241,12 +235,25 @@ window.require.define({"lib/view_helper": function(exports, require, module) {
       return console.log(optionalValue);
     }
   });
+
+  Handlebars.registerHelper("keys", function(obj, fn) {
+    var buffer, key;
+    buffer = '';
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        buffer += fn({
+          key: key,
+          value: obj[key]
+        });
+      }
+    }
+    return buffer;
+  });
   
 }});
 
 window.require.define({"models/battle": function(exports, require, module) {
   var Battle, Model,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -257,7 +264,6 @@ window.require.define({"models/battle": function(exports, require, module) {
     __extends(Battle, _super);
 
     function Battle() {
-      this.initialize = __bind(this.initialize, this);
       return Battle.__super__.constructor.apply(this, arguments);
     }
 
@@ -273,10 +279,6 @@ window.require.define({"models/battle": function(exports, require, module) {
           jay: 'Not disclosed'
         }
       };
-    };
-
-    Battle.prototype.initialize = function(args) {
-      return console.log(args);
     };
 
     return Battle;
@@ -312,39 +314,6 @@ window.require.define({"models/model": function(exports, require, module) {
     return Model;
 
   })(Backbone.Model);
-  
-}});
-
-window.require.define({"views/404": function(exports, require, module) {
-  var FourOhFourView, View,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  View = require('./view');
-
-  FourOhFourView = (function(_super) {
-
-    __extends(FourOhFourView, _super);
-
-    function FourOhFourView() {
-      this.initialize = __bind(this.initialize, this);
-      return FourOhFourView.__super__.constructor.apply(this, arguments);
-    }
-
-    FourOhFourView.prototype.el = '.main-page';
-
-    FourOhFourView.prototype.template = require('./templates/404');
-
-    FourOhFourView.prototype.initialize = function() {
-      return this.render();
-    };
-
-    return FourOhFourView;
-
-  })(View);
-
-  module.exports = FourOhFourView;
   
 }});
 
@@ -412,18 +381,24 @@ window.require.define({"views/create": function(exports, require, module) {
 }});
 
 window.require.define({"views/index": function(exports, require, module) {
-  var IndexView, View,
+  var BattleView, Battles, IndexView, View,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   View = require('./view');
 
+  Battles = require('../collections/battles');
+
   IndexView = (function(_super) {
 
     __extends(IndexView, _super);
 
     function IndexView() {
+      this.initBattles = __bind(this.initBattles, this);
+
+      this.initScrollers = __bind(this.initScrollers, this);
+
       this.afterRender = __bind(this.afterRender, this);
 
       this.initialize = __bind(this.initialize, this);
@@ -432,14 +407,34 @@ window.require.define({"views/index": function(exports, require, module) {
 
     IndexView.prototype.el = '.main-page';
 
+    IndexView.prototype.views = [];
+
     IndexView.prototype.template = require('./templates/index');
 
     IndexView.prototype.initialize = function() {
-      return this.render();
+      var _this = this;
+      this.collection = new Battles();
+      return this.collection.fetch({
+        success: function(data, textstatus, xhr) {
+          console.log('Shit worked');
+          console.log(data);
+          return _this.render();
+        },
+        error: function() {
+          return console.log('Something happened fetching battles');
+        }
+      });
     };
 
     IndexView.prototype.afterRender = function() {
-      $('#header').scrollPanel({
+      this.initScrollers();
+      return this.initBattles({
+        success: this.initBattles
+      });
+    };
+
+    IndexView.prototype.initScrollers = function() {
+      this.$('#header').scrollPanel({
         topPadding: -109,
         change: function(type, $el) {
           if (type === 'fixed') {
@@ -449,7 +444,7 @@ window.require.define({"views/index": function(exports, require, module) {
           }
         }
       });
-      return $('#header-graphic').scrollPanel({
+      return this.$('#header-graphic').scrollPanel({
         topPadding: -109,
         change: function(type, $el) {
           if (type === 'fixed') {
@@ -459,14 +454,116 @@ window.require.define({"views/index": function(exports, require, module) {
           }
         }
       });
+    };
+
+    IndexView.prototype.initBattles = function(args) {
+      var _this = this;
+      this.collection.each(function(battle) {
+        var view;
+        console.log(_this.collection.toJSON());
+        view = new BattleView({
+          model: battle
+        });
+        app.views.indexView.views.push(view);
+        return view.render();
+      });
+      return this;
     };
 
     return IndexView;
 
   })(View);
 
+  BattleView = (function(_super) {
+
+    __extends(BattleView, _super);
+
+    function BattleView() {
+      this.getRenderData = __bind(this.getRenderData, this);
+      return BattleView.__super__.constructor.apply(this, arguments);
+    }
+
+    BattleView.prototype.tagName = 'li';
+
+    BattleView.prototype.tagClass = 'battle';
+
+    BattleView.prototype.template = require('./templates/battles/pizza');
+
+    BattleView.prototype.getRenderData = function() {
+      return this.model.toJSON();
+    };
+
+    return BattleView;
+
+  })(View);
+
   module.exports = IndexView;
   
+}});
+
+window.require.define({"views/templates/battles/pizza": function(exports, require, module) {
+  module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+    helpers = helpers || Handlebars.helpers;
+    var buffer = "", stack1, stack2, stack3, stack4, foundHelper, tmp1, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression, blockHelperMissing=helpers.blockHelperMissing;
+
+  function program1(depth0,data) {
+    
+    var buffer = "", stack1;
+    buffer += "\n            <td>";
+    foundHelper = helpers.contender;
+    stack1 = foundHelper || depth0.contender;
+    stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.name);
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "contender.name", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</td>\n            ";
+    return buffer;}
+
+  function program3(depth0,data) {
+    
+    var buffer = "", stack1;
+    buffer += "\n        <tr>\n            <td class=\"";
+    foundHelper = helpers.key;
+    stack1 = foundHelper || depth0.key;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "key", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "\">";
+    foundHelper = helpers.val;
+    stack1 = foundHelper || depth0.val;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "val", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</td>\n        </tr>\n        ";
+    return buffer;}
+
+    buffer += "<table class=\"battle\">\n    <thead>\n        <tr>\n            ";
+    foundHelper = helpers.contenders;
+    stack1 = foundHelper || depth0.contenders;
+    foundHelper = helpers['in'];
+    stack2 = foundHelper || depth0['in'];
+    foundHelper = helpers.contender;
+    stack3 = foundHelper || depth0.contender;
+    foundHelper = helpers['for'];
+    stack4 = foundHelper || depth0['for'];
+    tmp1 = self.program(1, program1, data);
+    tmp1.hash = {};
+    tmp1.fn = tmp1;
+    tmp1.inverse = self.noop;
+    if(foundHelper && typeof stack4 === functionType) { stack1 = stack4.call(depth0, stack3, stack2, stack1, tmp1); }
+    else { stack1 = blockHelperMissing.call(depth0, stack4, stack3, stack2, stack1, tmp1); }
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n        </tr>\n    <tbody>\n         ";
+    foundHelper = helpers.contenders;
+    stack1 = foundHelper || depth0.contenders;
+    foundHelper = helpers.keys;
+    stack2 = foundHelper || depth0.keys;
+    tmp1 = self.program(3, program3, data);
+    tmp1.hash = {};
+    tmp1.fn = tmp1;
+    tmp1.inverse = self.noop;
+    if(foundHelper && typeof stack2 === functionType) { stack1 = stack2.call(depth0, stack1, tmp1); }
+    else { stack1 = blockHelperMissing.call(depth0, stack2, stack1, tmp1); }
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n    </tbody>\n</table>\n";
+    return buffer;});
 }});
 
 window.require.define({"views/templates/create": function(exports, require, module) {
@@ -484,7 +581,7 @@ window.require.define({"views/templates/index": function(exports, require, modul
     var foundHelper, self=this;
 
 
-    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">Coming soon!</div>\n<br /><br />\n<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><span>A lot of content</span>";});
+    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">Coming soon!</div>\n<div id=\"list\"></div>\n";});
 }});
 
 window.require.define({"views/view": function(exports, require, module) {

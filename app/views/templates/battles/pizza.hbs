@@ -1,0 +1,15 @@
+<table class="battle">
+    <thead>
+        <tr>
+            {{#for contender in contenders}}
+            <td>{{contender.name}}</td>
+            {{/for}}
+        </tr>
+    <tbody>
+         {{#keys contenders}}
+        <tr>
+            <td class="{{key}}">{{val}}</td>
+        </tr>
+        {{/keys}}
+    </tbody>
+</table>
