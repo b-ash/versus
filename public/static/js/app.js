@@ -8,7 +8,7 @@
   var cache = {};
 
   var has = function(object, name) {
-    return hasOwnProperty.call(object, name);
+    return ({}).hasOwnProperty.call(object, name);
   };
 
   var expand = function(root, name) {
@@ -37,7 +37,7 @@
     return function(name) {
       var dir = dirname(path);
       var absolute = expand(dir, name);
-      return require(absolute);
+      return globals.require(absolute);
     };
   };
 
@@ -443,6 +443,12 @@ window.require.define({"views/index": function(exports, require, module) {
     __extends(IndexView, _super);
 
     function IndexView() {
+      this._toggle = __bind(this._toggle, this);
+
+      this.toggleContact = __bind(this.toggleContact, this);
+
+      this.toggleAbout = __bind(this.toggleAbout, this);
+
       this.initBattles = __bind(this.initBattles, this);
 
       this.initScrollers = __bind(this.initScrollers, this);
@@ -458,6 +464,11 @@ window.require.define({"views/index": function(exports, require, module) {
     IndexView.prototype.views = [];
 
     IndexView.prototype.template = require('./templates/index');
+
+    IndexView.prototype.events = {
+      'click #about': 'toggleAbout',
+      'click #contact': 'toggleContact'
+    };
 
     IndexView.prototype.initialize = function() {
       var _this = this;
@@ -514,6 +525,34 @@ window.require.define({"views/index": function(exports, require, module) {
         _this.$('#list').append(view.render().el);
         return view.trigger('slider');
       });
+      return this;
+    };
+
+    IndexView.prototype.toggleAbout = function(event) {
+      var $about, $contact;
+      event.preventDefault();
+      $about = this.$('#about-panel');
+      $contact = this.$('#contact-panel');
+      return this._toggle($about, $contact);
+    };
+
+    IndexView.prototype.toggleContact = function(event) {
+      var $about, $contact;
+      event.preventDefault();
+      $about = this.$('#about-panel');
+      $contact = this.$('#contact-panel');
+      return this._toggle($contact, $about);
+    };
+
+    IndexView.prototype._toggle = function($el, $other) {
+      if ($el.is(':visible')) {
+        $el.slideUp(1000);
+      } else {
+        $el.slideDown(1000);
+      }
+      if ($other.is(':visible')) {
+        $other.slideUp(1000);
+      }
       return this;
     };
 
@@ -651,7 +690,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     stack1 = foundHelper || depth0.description;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "description", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</p>\n</div>\n\n<div class=\"battle-segway\">\n    <p>---- The data ----</p>\n</div>\n\n<div class=\"battle-wrap\">\n    <div class=\"battle-inner\">\n        <table class=\"battle\">\n            <thead>\n                <tr>\n                    <th>Category</th>\n                    ";
+    buffer += escapeExpression(stack1) + "</p>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The data -------</p>\n</div>\n\n<div class=\"battle-wrap\">\n    <div class=\"battle-inner\">\n        <table class=\"battle\">\n            <thead>\n                <tr>\n                    <th></th>\n                    ";
     foundHelper = helpers.contenders;
     stack1 = foundHelper || depth0.contenders;
     stack2 = helpers.each;
@@ -675,7 +714,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(foundHelper && typeof stack3 === functionType) { stack1 = stack3.call(depth0, stack2, stack1, tmp1); }
     else { stack1 = blockHelperMissing.call(depth0, stack3, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"explanations\">\n    ";
+    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n</div>\n\n<div class=\"explanations\">\n    ";
     foundHelper = helpers.explanations;
     stack1 = foundHelper || depth0.explanations;
     stack2 = helpers.each;
@@ -704,7 +743,7 @@ window.require.define({"views/templates/index": function(exports, require, modul
     var foundHelper, self=this;
 
 
-    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n\n<div id=\"footer\">\n    <span>Made with &lt;3 and humor</span>\n</div>\n";});
+    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n\n<div id=\"footer-wrap\">\n    <div id=\"footer\">\n        <span id=\"tagline\">Made with &hearts; and humor</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"about\">Who Are We?</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"contact\">Contact Us</span>\n    </div>\n</div>\n\n<div id=\"footer-panels\">\n    <div id=\"about-panel\">\n        <p>Abouts coming soon!</p>\n    </div>\n    <div id=\"contact-panel\">\n        <p>Contact us coming soon!</p>\n    </div>\n</div>\n";});
 }});
 
 window.require.define({"views/view": function(exports, require, module) {

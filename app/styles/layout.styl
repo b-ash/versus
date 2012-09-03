@@ -7,10 +7,53 @@ minimum-width()
     width: 100%
     margin: 0 auto
 
+#footer, #footer-wrap
+    height: 30px
+
 #footer
     text-align: center
-    margin-top: 10px
-    padding: 20px
-    font-style: italic
+    font-style: normal
     font-weight: bold
+
+    width: 100%
+    position: fixed
+    left: 0
+    bottom: 0
+
+    background-color: #900
+    color: white
+
+    span
+        line-height: 28px
+
+        &.inline-divider
+            font-style: normal
+            margin: 0 10px
+
+        &#contact, &#about
+            cursor: pointer
+
+            &:hover
+                font-style: italic
+
+#footer-panels
+    > div
+        position: fixed
+        left: 50%
+        bottom: 30px
+        background-color: #900
+        color: white
+        border-radius 5px 5px 0 0 / 5px 5px 0 0
+        display: none
+        text-align: center
+
+    #about-panel
+        width: 500px
+        height: 400px
+        margin: 0 0 0 -250px
+
+    #contact-panel
+        width: 500px
+        height: 200px
+        margin: 0 0 0 -250px
     

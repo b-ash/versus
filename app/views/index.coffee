@@ -5,6 +5,9 @@ class IndexView extends View
     el: '.main-page'
     views: []
     template: require './templates/index'
+    events:
+        'click #about'   : 'toggleAbout'
+        'click #contact' : 'toggleContact'
 
     initialize: =>
         @collection = new Battles()
@@ -43,6 +46,30 @@ class IndexView extends View
             app.views.indexView.views.push view
             @$('#list').append view.render().el
             view.trigger 'slider'
+        @
+
+    toggleAbout: (event) =>
+        event.preventDefault()
+
+        $about = @$ '#about-panel'
+        $contact = @$ '#contact-panel'
+        @_toggle $about, $contact
+
+    toggleContact: (event) =>
+        event.preventDefault()
+
+        $about = @$ '#about-panel'
+        $contact = @$ '#contact-panel'
+        @_toggle $contact, $about
+
+    _toggle: ($el, $other) =>
+        if $el.is(':visible')
+            $el.slideUp 1000
+        else
+            $el.slideDown 1000
+
+        if $other.is(':visible')
+            $other.slideUp 1000
         @
 
 

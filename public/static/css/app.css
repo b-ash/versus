@@ -10803,13 +10803,13 @@ li {
 }
 .battle-description {
   font-family: 'helvetica';
-  margin: 20px;
+  margin-top: 20px;
 }
 .battle-segway {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  margin: 10px;
+  margin: 20px;
 }
 .battle-wrap {
   width: 100%;
@@ -10848,6 +10848,7 @@ li {
   padding-left: 15px;
 }
 .battle-wrap .battle-inner table .rank {
+  border-radius: 4px;
   font-size: 20px;
   line-height: 20px;
   width: 26px;
@@ -10874,35 +10875,82 @@ li {
   width: 100%;
   margin: 0 auto;
 }
+#footer,
+#footer-wrap {
+  height: 30px;
+}
 #footer {
   text-align: center;
-  margin-top: 10px;
-  padding: 20px;
-  font-style: italic;
+  font-style: normal;
   font-weight: bold;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #900;
+  color: #fff;
 }
-#header-wrap {
+#footer span {
+  line-height: 28px;
+}
+#footer span.inline-divider {
+  font-style: normal;
+  margin: 0 10px;
+}
+#footer span#contact,
+#footer span#about {
+  cursor: pointer;
+}
+#footer span#contact:hover,
+#footer span#about:hover {
+  font-style: italic;
+}
+#footer-panels > div {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  background-color: #900;
+  color: #fff;
+  border-radius: 5px 5px 0 0/5px 5px 0 0;
+  display: none;
+  text-align: center;
+}
+#footer-panels #about-panel {
+  width: 500px;
+  height: 400px;
+  margin: 0 0 0 -250px;
+}
+#footer-panels #contact-panel {
+  width: 500px;
+  height: 200px;
+  margin: 0 0 0 -250px;
+}
+#header-wrap,
+#header-graphic {
   height: 225px;
 }
-#header-wrap #header {
+#header-wrap #header,
+#header-graphic #header {
   background-image: url("/static/images/header_bkgd.png");
   width: 100%;
   height: 150px;
   float: left;
 }
-#header-wrap #header-graphic-wrap {
+#header-wrap #header-graphic-wrap,
+#header-graphic #header-graphic-wrap {
   position: relative;
   background-repeat: no-repeat;
   background-position: center;
   width: 100%;
 }
-#header-wrap #header-graphic {
+#header-wrap #header-graphic,
+#header-graphic #header-graphic {
   background: transparent url("/static/images/header_graphic.png");
   width: 950px;
-  height: 225px;
   margin: 0 auto;
 }
-#header-wrap #header-graphic.floating {
+#header-wrap #header-graphic.floating,
+#header-graphic #header-graphic.floating {
   left: 50%;
   margin-left: -475px;
 }
