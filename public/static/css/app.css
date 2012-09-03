@@ -10784,8 +10784,15 @@ li {
   width: 100%;
   margin-top: 10px;
 }
-#create-view #create-wrap #create-inner {
-  margin: 0 auto;
+#create-view #create-wrap #create {
+  float: left;
+  margin-right: 20px;
+}
+#create-view #create-wrap #success,
+#create-view #create-wrap #error {
+  display: none;
+  float: left;
+  width: 465px;
 }
 #index-view {
   width: 100%;
@@ -10794,91 +10801,86 @@ li {
   width: 950px;
   margin: 0 auto;
 }
-#list table {
-  margin: 80px 0;
-}
-#list table td span.criteria {
-  display: block;
-}
-#create-view {
+.battle-description {
+  font-family: 'helvetica';
   margin: 20px;
 }
-#create-view #config {
-  width: 600px;
-  height: 400px;
+.battle-segway {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px;
 }
-#create-view #create-wrap {
-  width: 100%;
-  margin-top: 10px;
-}
-#create-view #create-wrap #create-inner {
-  margin: 0 auto;
-}
-#index-view {
+.battle-wrap {
   width: 100%;
 }
-#list {
-  width: 950px;
+.battle-wrap .battle-inner {
+  width: 700px;
   margin: 0 auto;
 }
-#list table {
-  margin: 80px 0;
+.battle-wrap .battle-inner table {
+  width: 100%;
 }
-#list table td span.criteria {
+.battle-wrap .battle-inner table tr {
+  height: 50px;
+}
+.battle-wrap .battle-inner table .criteria {
+  vertical-align: middle;
+}
+.battle-wrap .battle-inner table .criteria span {
   display: block;
+}
+.battle-wrap .battle-inner table .criteria span.name {
+  font-size: 18px;
+  font-style: italic;
+}
+.battle-wrap .battle-inner table .criteria span.desc {
+  color: #666;
+  font-size: 12px;
+}
+.battle-wrap .battle-inner table th.contender {
+  width: 90px;
+  text-align: center;
+}
+.battle-wrap .battle-inner table .rank-wrap {
+  width: 26px;
+  height: 22px;
+  padding-left: 15px;
+}
+.battle-wrap .battle-inner table .rank {
+  font-size: 20px;
+  line-height: 20px;
+  width: 26px;
+  height: 22px;
+  padding: 10px;
+  margin: 5px;
+  background-color: #ddd;
+  border: 1px solid #999;
+  text-align: center;
+  color: #666;
+}
+.explanation {
+  margin: 20px;
+}
+.explanation div {
+  margin-right: 10px;
+}
+.explanation span {
+  font-weight: bold;
+  font-size: 18px;
 }
 .main-page {
   min-width: 950px;
   width: 100%;
   margin: 0 auto;
 }
-#header-wrap {
-  height: 225px;
-}
-#header-wrap #header {
-  background-image: url("/static/images/header_bkgd.png");
-  width: 100%;
-  height: 150px;
-  float: left;
-}
-#header-wrap #header-graphic-wrap {
-  position: relative;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100%;
-}
-#header-wrap #header-graphic {
-  background: transparent url("/static/images/header_graphic.png");
-  width: 950px;
-  height: 225px;
-  margin: 0 auto;
-}
-#header-wrap #header-graphic.floating {
-  left: 50%;
-  margin-left: -475px;
-}
-.clear {
-  clear: both;
-}
-.hidden {
-  display: none;
-}
-.bold {
+#footer {
+  text-align: center;
+  margin-top: 10px;
+  padding: 20px;
+  font-style: italic;
   font-weight: bold;
 }
-.left {
-  float: left;
-}
-.right {
-  float: right;
-}
-a:hover,
-a:visited {
-  color: #08c;
-}
-li {
-  list-style: none;
-}
 #header-wrap {
   height: 225px;
 }
@@ -10904,37 +10906,24 @@ li {
   left: 50%;
   margin-left: -475px;
 }
-#create-view {
-  margin: 20px;
-}
-#create-view #config {
-  width: 600px;
-  height: 400px;
-}
-#create-view #create-wrap {
+.logo-wrap {
+  position: relative;
   width: 100%;
-  margin-top: 10px;
+  height: 155px;
 }
-#create-view #create-wrap #create-inner {
-  margin: 0 auto;
-}
-#index-view {
-  width: 100%;
-}
-#list {
+.logo {
   width: 950px;
+  height: 155px;
   margin: 0 auto;
 }
-#list table {
-  margin: 80px 0;
+.logo.floating {
+  left: 50%;
+  margin-left: -475px;
 }
-#list table td span.criteria {
-  display: block;
-}
-.main-page {
-  min-width: 950px;
-  width: 100%;
-  margin: 0 auto;
+.logo.deep-dish-pizza {
+  background: transparent url("/static/images/deep-dish-pizza.png");
+  background-repeat: no-repeat;
+  background-position-y: -70px;
 }
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.

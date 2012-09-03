@@ -1,34 +1,56 @@
-<div class="logo {{name}}"></div>
+<div class="logo-wrap">
+    <div class="logo {{name}}"></div>
+</div>
 
 <div class="battle-description">
     <p>{{description}}</p>
 </div>
 
-<table class="battle">
-    <thead>
-        <tr>
-            <td>Category</td>
-            {{#each contenders}}
-            <td class="contender">{{name}}</td>
-            {{/each}}
-        </tr>
-    <tbody>
-        {{#keys criteria contenders}}
-        <tr>
-            <td>
-                <span class="criteria name">{{key}}</span>
-                <span class="criteria desc">{{value}}</span>
-            </td>
-            {{#pluck_criteria ctx key}}
-            <td>{{val}}</td>
-            {{/pluck_criteria}}
-        </tr>
-        {{/keys}}
-    </tbody>
-</table>
+<div class="battle-segway">
+    <p>---- The data ----</p>
+</div>
 
-{{#each explanations}}
-<div class="explanation">
-    <span>{{name}}</span>
-    <p>{{review}}</p>
-{{/each}}
+<div class="battle-wrap">
+    <div class="battle-inner">
+        <table class="battle">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    {{#each contenders}}
+                    <th class="contender">{{name}}</th>
+                    {{/each}}
+                </tr>
+            <tbody>
+                {{#keys criteria contenders}}
+                <tr>
+                    <td class="criteria">
+                        <span class="name">{{key}}</span>
+                        <span class="desc">{{value}}</span>
+                    </td>
+                    {{#pluck_criteria ctx key}}
+                    <td>
+                        <div class="rank-wrap">
+                            <div class="rank">{{val}}</div>
+                        </div>
+                    </td>
+                    {{/pluck_criteria}}
+                </tr>
+                {{/keys}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="explanations">
+    {{#each explanations}}
+    <div class="explanation">
+        <div>
+            <span>{{name}}</span>
+        </div>
+        <div>
+            <p>{{review}}</p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    {{/each}}
+</div>

@@ -42,6 +42,7 @@ class IndexView extends View
             view = new BattleView {model: battle}
             app.views.indexView.views.push view
             @$('#list').append view.render().el
+            view.trigger 'slider'
         @
 
 
@@ -50,8 +51,20 @@ class BattleView extends View
     tagClass: 'battle'
     template: require './templates/battle'
 
+    initialize: =>
+        @on 'slider', @initSlider
+
     getRenderData: =>
         @model.toJSON()
+
+    initSlider: =>
+        @$('.deep-dish-pizza').scrollPanel
+            topPadding: -39
+            change: (type, $el) ->
+                if type is 'fixed'
+                    $el.addClass 'floating'
+                else
+                    $el.removeClass 'floating'
 
 
 module.exports = IndexView

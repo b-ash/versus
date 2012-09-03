@@ -38,11 +38,16 @@ class CreateView extends View
         event.stopPropagation()
 
         json = JSON.parse @$('#config').val()
-        battle = new Battle json
+        battle = new Battle()
         console.log battle
-        battle.save
-            success: () ->
-                console.log "S'all good bro, save complete"
+        battle.save json, {
+            success: =>
+                @$('#error').hide()
+                @$('#success').slideDown 500
+            error: =>
+                @$('#error').slideDown 500
+                @$('#success').hide()
+        }
 
 
 module.exports = CreateView

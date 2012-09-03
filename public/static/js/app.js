@@ -401,15 +401,21 @@ window.require.define({"views/create": function(exports, require, module) {
     };
 
     CreateView.prototype.create = function(event) {
-      var battle, json;
+      var battle, json,
+        _this = this;
       event.preventDefault();
       event.stopPropagation();
       json = JSON.parse(this.$('#config').val());
-      battle = new Battle(json);
+      battle = new Battle();
       console.log(battle);
-      return battle.save({
+      return battle.save(json, {
         success: function() {
-          return console.log("S'all good bro, save complete");
+          _this.$('#error').hide();
+          return _this.$('#success').slideDown(500);
+        },
+        error: function() {
+          _this.$('#error').slideDown(500);
+          return _this.$('#success').hide();
         }
       });
     };
@@ -505,7 +511,8 @@ window.require.define({"views/index": function(exports, require, module) {
           model: battle
         });
         app.views.indexView.views.push(view);
-        return _this.$('#list').append(view.render().el);
+        _this.$('#list').append(view.render().el);
+        return view.trigger('slider');
       });
       return this;
     };
@@ -519,7 +526,11 @@ window.require.define({"views/index": function(exports, require, module) {
     __extends(BattleView, _super);
 
     function BattleView() {
+      this.initSlider = __bind(this.initSlider, this);
+
       this.getRenderData = __bind(this.getRenderData, this);
+
+      this.initialize = __bind(this.initialize, this);
       return BattleView.__super__.constructor.apply(this, arguments);
     }
 
@@ -529,8 +540,25 @@ window.require.define({"views/index": function(exports, require, module) {
 
     BattleView.prototype.template = require('./templates/battle');
 
+    BattleView.prototype.initialize = function() {
+      return this.on('slider', this.initSlider);
+    };
+
     BattleView.prototype.getRenderData = function() {
       return this.model.toJSON();
+    };
+
+    BattleView.prototype.initSlider = function() {
+      return this.$('.deep-dish-pizza').scrollPanel({
+        topPadding: -39,
+        change: function(type, $el) {
+          if (type === 'fixed') {
+            return $el.addClass('floating');
+          } else {
+            return $el.removeClass('floating');
+          }
+        }
+      });
     };
 
     return BattleView;
@@ -549,28 +577,28 @@ window.require.define({"views/templates/battle": function(exports, require, modu
   function program1(depth0,data) {
     
     var buffer = "", stack1;
-    buffer += "\n            <td class=\"contender\">";
+    buffer += "\n                    <th class=\"contender\">";
     foundHelper = helpers.name;
     stack1 = foundHelper || depth0.name;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</td>\n            ";
+    buffer += escapeExpression(stack1) + "</th>\n                    ";
     return buffer;}
 
   function program3(depth0,data) {
     
     var buffer = "", stack1, stack2, stack3;
-    buffer += "\n        <tr>\n            <td>\n                <span class=\"criteria name\">";
+    buffer += "\n                <tr>\n                    <td class=\"criteria\">\n                        <span class=\"name\">";
     foundHelper = helpers.key;
     stack1 = foundHelper || depth0.key;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "key", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</span>\n                <span class=\"criteria desc\">";
+    buffer += escapeExpression(stack1) + "</span>\n                        <span class=\"desc\">";
     foundHelper = helpers.value;
     stack1 = foundHelper || depth0.value;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "value", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</span>\n            </td>\n            ";
+    buffer += escapeExpression(stack1) + "</span>\n                    </td>\n                    ";
     foundHelper = helpers.key;
     stack1 = foundHelper || depth0.key;
     foundHelper = helpers.ctx;
@@ -584,46 +612,46 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(foundHelper && typeof stack3 === functionType) { stack1 = stack3.call(depth0, stack2, stack1, tmp1); }
     else { stack1 = blockHelperMissing.call(depth0, stack3, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n        </tr>\n        ";
+    buffer += "\n                </tr>\n                ";
     return buffer;}
   function program4(depth0,data) {
     
     var buffer = "", stack1;
-    buffer += "\n            <td>";
+    buffer += "\n                    <td>\n                        <div class=\"rank-wrap\">\n                            <div class=\"rank\">";
     foundHelper = helpers.val;
     stack1 = foundHelper || depth0.val;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "val", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</td>\n            ";
+    buffer += escapeExpression(stack1) + "</div>\n                        </div>\n                    </td>\n                    ";
     return buffer;}
 
   function program6(depth0,data) {
     
     var buffer = "", stack1;
-    buffer += "\n<div class=\"explanation\">\n    <span>";
+    buffer += "\n    <div class=\"explanation\">\n        <div>\n            <span>";
     foundHelper = helpers.name;
     stack1 = foundHelper || depth0.name;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</span>\n    <p>";
+    buffer += escapeExpression(stack1) + "</span>\n        </div>\n        <div>\n            <p>";
     foundHelper = helpers.review;
     stack1 = foundHelper || depth0.review;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "review", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</p>\n";
+    buffer += escapeExpression(stack1) + "</p>\n        </div>\n        <div class=\"clear\"></div>\n    </div>\n    ";
     return buffer;}
 
-    buffer += "<div class=\"logo ";
+    buffer += "<div class=\"logo-wrap\">\n    <div class=\"logo ";
     foundHelper = helpers.name;
     stack1 = foundHelper || depth0.name;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "\"></div>\n\n<div class=\"battle-description\">\n    <p>";
+    buffer += escapeExpression(stack1) + "\"></div>\n</div>\n\n<div class=\"battle-description\">\n    <p>";
     foundHelper = helpers.description;
     stack1 = foundHelper || depth0.description;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "description", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</p>\n</div>\n\n<table class=\"battle\">\n    <thead>\n        <tr>\n            <td>Category</td>\n            ";
+    buffer += escapeExpression(stack1) + "</p>\n</div>\n\n<div class=\"battle-segway\">\n    <p>---- The data ----</p>\n</div>\n\n<div class=\"battle-wrap\">\n    <div class=\"battle-inner\">\n        <table class=\"battle\">\n            <thead>\n                <tr>\n                    <th>Category</th>\n                    ";
     foundHelper = helpers.contenders;
     stack1 = foundHelper || depth0.contenders;
     stack2 = helpers.each;
@@ -633,7 +661,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     tmp1.inverse = self.noop;
     stack1 = stack2.call(depth0, stack1, tmp1);
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n        </tr>\n    <tbody>\n        ";
+    buffer += "\n                </tr>\n            <tbody>\n                ";
     foundHelper = helpers.contenders;
     stack1 = foundHelper || depth0.contenders;
     foundHelper = helpers.criteria;
@@ -647,7 +675,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(foundHelper && typeof stack3 === functionType) { stack1 = stack3.call(depth0, stack2, stack1, tmp1); }
     else { stack1 = blockHelperMissing.call(depth0, stack3, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n    </tbody>\n</table>\n\n";
+    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"explanations\">\n    ";
     foundHelper = helpers.explanations;
     stack1 = foundHelper || depth0.explanations;
     stack2 = helpers.each;
@@ -657,7 +685,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     tmp1.inverse = self.noop;
     stack1 = stack2.call(depth0, stack1, tmp1);
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n";
+    buffer += "\n</div>\n";
     return buffer;});
 }});
 
@@ -667,7 +695,7 @@ window.require.define({"views/templates/create": function(exports, require, modu
     var foundHelper, self=this;
 
 
-    return "<div id=\"create-view\">\n    <div class=\"title\">\n        <h1>Create yo shiz</h1>\n        <h3>It better be proper JSON...</h3>\n    </div>\n\n    <textarea id=\"config\" rows=\"10\" />\n    <div id=\"create-wrap\">\n        <div id=\"create-inner\">\n            <a id=\"create\" class=\"btn-primary btn-large\" href=\"#\" >Create</a>\n        </div>\n    </div>\n</div>";});
+    return "<div id=\"create-view\">\n    <div class=\"title\">\n        <h1>Create yo shiz</h1>\n        <h3>It better be proper JSON...</h3>\n    </div>\n\n    <textarea id=\"config\" rows=\"10\" />\n    <div id=\"create-wrap\">\n        <div id=\"create-inner\">\n            <a id=\"create\" class=\"btn-primary btn-large\" href=\"#\" >Create</a>\n        </div>\n\n        <div id=\"success\" class=\"alert alert-success\">S'all good brotha, I gotchu. Save successful.</div>\n        <div id=\"error\" class=\"alert alert-error\">Whoops, something went down. Check the logs.</div>\n    </div>\n</div>";});
 }});
 
 window.require.define({"views/templates/index": function(exports, require, module) {
@@ -676,7 +704,7 @@ window.require.define({"views/templates/index": function(exports, require, modul
     var foundHelper, self=this;
 
 
-    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n";});
+    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n\n<div id=\"footer\">\n    <span>Made with &lt;3 and humor</span>\n</div>\n";});
 }});
 
 window.require.define({"views/view": function(exports, require, module) {
