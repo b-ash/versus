@@ -49,13 +49,13 @@
         }
     ],
     "criteria":[
-        {"Crust":"Flavor, Texture - is it crispy / burnt / too thin?"},
-        {"Cheese":"Flavor, Amount - too much / little?"},
-        {"Toppings":"Flavor, Intregration - how well it mix? Amount - too much / little?"},
-        {"Sauce":"Flavor, Amount - too much / little?"},
+        {"Crust":"Flavor, Texture (crispy / burnt / too thin)"},
+        {"Cheese":"Flavor, Amount (too much / little)"},
+        {"Toppings":"Flavor, Intregration (how well did it mix), Amount (too much / little)"},
+        {"Sauce":"Flavor, Amount (too much / little)"},
         {"Presentation":"How did the menu look? How did the food look?"},
-        {"Beer Selection":"You need beer; It's important - did they have 312?"},
-        {"Atmosphere":"Restaurant setup / feel, How was the waiter / waitress?"},
+        {"Beer Selection":"You need beer; it's important. Did they have 312?"},
+        {"Atmosphere":"Restaurant setup / feel, attentiveness of wait staff"},
         {"Price":"Was the pizza expensive? Was it worth what they were charging?"},
         {"Quality":"Overall pizza-eating experience"}
     ],
@@ -63,7 +63,7 @@
     "explanations":[
         {
             "name":"Bash",
-            "review":"It's interesting how different these restaurants differ. Lou's was killer - Joey D rapped / sang, the building was really nice with tons of sports paraphernalia around, and it didn't feel like I was in a chain. Walking into Giordano's was disappointing; I felt like I was in a place that was just as likely to be in Boston. Lou's pizza looked awesome, and so did Giordano's. The deciding factors came down to the sauce and presentation. The sauce at Giordano's literally tasted like Ragu - gross! It blended well, but on it's own was not very appetizing. Lou's was very tasty. At Giordano's, we had to wait ~10 minutes between each waitress interaction; at Lou's, our waiter came by more frequently (if only to rap). Overall, Lou's was absolutely my favorite. That being said, Giordano's had good pizza. If you only had a lunch break within the loop and you didn't have time to make the wait at Lou's plus the 20 minute trip out there, Giordano's would still be a solid choice."
+            "review":"It's interesting how much these restaurants differ. Lou's was killer - Joey D rapped / sang, the building was really nice with tons of sports paraphernalia around, and it didn't feel like I was in a chain. Walking into Giordano's was disappointing; I felt like I was in a place that was just as likely to be in Boston. We arrived at Gino's a bit before opening, so it was quiet when we got there. The waiter was SUPER nice (although he didn't rap). All 3 pies looked amazing. The deciding factors came down to the sauce and presentation. The sauce at Giordano's literally tasted like Ragu - gross! It blended well, but on it's own was not very appetizing. Lou's was very tasty, and fit well with the rest of the ingredients. At Gino's, the sauce tasted more like pasta sauce - a plus for me, but stood out a bit much on the pizza. At Giordano's, we had to wait ~10 minutes between each waitress interaction; at Lou's, our waiter came by more frequently (if only to rap). Gino's waiter seemed like he really enjoyed being a waiter, and Jay and I wouldn't help but smile whenever he came over. Overall, Lou's was absolutely my favorite. That being said, Giordano's and Gino's both had good pizza. If you only had a lunch break within the loop and you didn't have time to make the wait at Lou's plus the 20 minute trip out there, Giordano's would still be a solid choice. Gino's came in second for me, with some really killer flavor. The toppings just weren't as up-to-snuff as Lou's. However, maybe the different locations of each could have made a difference - there's another Gino's in the loop as well."
         },
         {
             "name":"Jay",

@@ -10897,6 +10897,9 @@ li {
   font-style: normal;
   margin: 0 10px;
 }
+#footer span.selected {
+  color: #ccc;
+}
 #footer span#contact,
 #footer span#about {
   cursor: pointer;
@@ -10945,23 +10948,28 @@ li {
 }
 #footer-panels #contact-panel {
   width: 440px;
-  height: 300px;
+  height: 120px;
   margin: 0 0 0 -220px;
+  text-align: center;
+}
+#footer-panels #contact-panel .name {
+  display: block;
+  margin-bottom: 5px;
+}
+#footer-panels #contact-panel .personal-site {
+  display: block;
 }
 #footer-panels #contact-panel #contact-content {
-  margin: 20px;
+  margin: 10px;
 }
-#footer-panels #contact-panel #contact-content #contact-bash {
-  width: 200px;
-}
+#footer-panels #contact-panel #contact-content #contact-bash,
 #footer-panels #contact-panel #contact-content #contact-jay {
   width: 200px;
 }
 #footer-panels #contact-panel #contact-content #contact-xtra {
   text-align: center;
-  position: relative;
   width: 400px;
-  top: 220px;
+  margin-top: 10px;
 }
 #header-wrap,
 #header-graphic {

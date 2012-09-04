@@ -30,6 +30,9 @@ minimum-width()
             font-style: normal
             margin: 0 10px
 
+        &.selected
+            color: #CCC
+
         &#contact, &#about
             cursor: pointer
 
@@ -73,21 +76,24 @@ minimum-width()
 
     #contact-panel
         width: 440px
-        height: 300px
+        height: 120px
         margin: 0 0 0 -220px
+        text-align: center
+
+        .name
+            display: block
+            margin-bottom: 5px
+        .personal-site
+            display: block
 
         #contact-content
-            margin: 20px
+            margin: 10px
 
-            #contact-bash
-                width: 200px
-
-            #contact-jay
-                width: 200px
+            #contact-bash, #contact-jay
+                width: 200px 
 
             #contact-xtra
                 text-align: center
-                position: relative
                 width: 400px
-                top: 220px
+                margin-top: 10px
     

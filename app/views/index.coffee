@@ -18,9 +18,7 @@ class IndexView extends View
                 console.log 'Something happened fetching battles'
 
     afterRender: =>
-        @initScrollers()
-        @initBattles
-            success: @initBattles
+        @initEls().initScrollers().initBattles {success: @initBattles}
 
     initScrollers: =>
         @$('#header').scrollPanel
@@ -38,6 +36,7 @@ class IndexView extends View
                     $el.addClass 'floating'
                 else
                     $el.removeClass 'floating'
+        @
 
     initBattles: (args) =>
         console.log @collection.toJSON()
@@ -48,28 +47,32 @@ class IndexView extends View
             view.trigger 'slider'
         @
 
+    initEls: =>
+        @$about = @$ '#about-panel'
+        @$aboutLink = @$ '#about'
+        @$contact = @$ '#contact-panel'
+        @$contactLink = @$ '#contact'
+        @
+
     toggleAbout: (event) =>
         event.preventDefault()
-
-        $about = @$ '#about-panel'
-        $contact = @$ '#contact-panel'
-        @_toggle $about, $contact
+        @_toggle @$about, @$contact, @$aboutLink, @$contactLink, 800
 
     toggleContact: (event) =>
         event.preventDefault()
+        @_toggle @$contact, @$about, @$contactLink, @$aboutLink, 350
 
-        $about = @$ '#about-panel'
-        $contact = @$ '#contact-panel'
-        @_toggle $contact, $about
-
-    _toggle: ($el, $other) =>
+    _toggle: ($el, $other, $elLink, $otherLink, speed) =>
         if $el.is(':visible')
-            $el.slideUp 1000
+            $elLink.removeClass 'selected'
+            $el.slideUp speed
         else
-            $el.slideDown 1000
+            $elLink.addClass 'selected'
+            $el.slideDown speed
 
         if $other.is(':visible')
-            $other.slideUp 1000
+            $otherLink.removeClass 'selected'
+            $other.slideUp 350
         @
 
 

@@ -449,6 +449,8 @@ window.require.define({"views/index": function(exports, require, module) {
 
       this.toggleAbout = __bind(this.toggleAbout, this);
 
+      this.initEls = __bind(this.initEls, this);
+
       this.initBattles = __bind(this.initBattles, this);
 
       this.initScrollers = __bind(this.initScrollers, this);
@@ -484,8 +486,7 @@ window.require.define({"views/index": function(exports, require, module) {
     };
 
     IndexView.prototype.afterRender = function() {
-      this.initScrollers();
-      return this.initBattles({
+      return this.initEls().initScrollers().initBattles({
         success: this.initBattles
       });
     };
@@ -501,7 +502,7 @@ window.require.define({"views/index": function(exports, require, module) {
           }
         }
       });
-      return this.$('#header-graphic').scrollPanel({
+      this.$('#header-graphic').scrollPanel({
         topPadding: -109,
         change: function(type, $el) {
           if (type === 'fixed') {
@@ -511,6 +512,7 @@ window.require.define({"views/index": function(exports, require, module) {
           }
         }
       });
+      return this;
     };
 
     IndexView.prototype.initBattles = function(args) {
@@ -528,30 +530,35 @@ window.require.define({"views/index": function(exports, require, module) {
       return this;
     };
 
+    IndexView.prototype.initEls = function() {
+      this.$about = this.$('#about-panel');
+      this.$aboutLink = this.$('#about');
+      this.$contact = this.$('#contact-panel');
+      this.$contactLink = this.$('#contact');
+      return this;
+    };
+
     IndexView.prototype.toggleAbout = function(event) {
-      var $about, $contact;
       event.preventDefault();
-      $about = this.$('#about-panel');
-      $contact = this.$('#contact-panel');
-      return this._toggle($about, $contact);
+      return this._toggle(this.$about, this.$contact, this.$aboutLink, this.$contactLink, 800);
     };
 
     IndexView.prototype.toggleContact = function(event) {
-      var $about, $contact;
       event.preventDefault();
-      $about = this.$('#about-panel');
-      $contact = this.$('#contact-panel');
-      return this._toggle($contact, $about);
+      return this._toggle(this.$contact, this.$about, this.$contactLink, this.$aboutLink, 350);
     };
 
-    IndexView.prototype._toggle = function($el, $other) {
+    IndexView.prototype._toggle = function($el, $other, $elLink, $otherLink, speed) {
       if ($el.is(':visible')) {
-        $el.slideUp(1000);
+        $elLink.removeClass('selected');
+        $el.slideUp(speed);
       } else {
-        $el.slideDown(1000);
+        $elLink.addClass('selected');
+        $el.slideDown(speed);
       }
       if ($other.is(':visible')) {
-        $other.slideUp(1000);
+        $otherLink.removeClass('selected');
+        $other.slideUp(350);
       }
       return this;
     };
@@ -743,7 +750,7 @@ window.require.define({"views/templates/index": function(exports, require, modul
     var foundHelper, self=this;
 
 
-    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n\n<div id=\"footer-wrap\">\n    <div id=\"footer\">\n        <span id=\"tagline\">Made with &hearts; and humor</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"about\">Who Are We?</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"contact\">Contact Us</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"copyright\">&copy; 2012</span>\n    </div>\n</div>\n\n<div id=\"footer-panels\">\n    <div id=\"about-panel\">\n        <div id=\"about-content\">\n            <div id=\"about-img-wrap\" class=\"left\">\n                <img src=\"/static/images/about.jpg\" />\n            </div>\n            <div id=\"about-txt-wrap\" class=\"left\">\n                <span class=\"title\">The Crew</span>\n                <p>Jayeth and Basheus are just two dudes versus the world. In Boston, we have Basheus: a debonair, industrious code monkey who loves all things tech, fitness and music. In Chicago resides Jayeth: imaginative, dexterous and graphics-savvy, spreading visuals and musical prowess to the masses.</p>\n\n                <span class=\"title\">The Task</span>\n                <p>Conquering Boston and Chicago is just one feat on their list. Long-time friends and bandmates, these two have seen many things. Why not rate and assess really minscule, unnecessary, potentially uninteresting things? The world is their oyster.<p>\n\n                <p>Gauntlet thrown; gauntlet picked up.</p>\n            </div>\n        </div>\n    </div>\n    <div id=\"contact-panel\">\n        <div id=\"contact-content\">\n            <div id=\"contact-bash\" class=\"left\">\n                <a href=\"https://twitter.com/Bryan_Ash\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @Bryan_Ash</a>\n    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n            </div>\n            <div id=\"contact-jay\" class=\"left\">\n                <a href=\"https://twitter.com/JaySpiwak\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @JaySpiwak</a>\n    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n            </div>\n            <div id=\"contact-xtra\">\n                This page is hosted on <a href=\"http://www.nodejitsu.com\">Nodejitsu</a>. Check out the <a href=\"https://github.com/b-ash/versus\">code</a>.\n            </div>\n        </div>\n    </div>\n</div>\n";});
+    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n\n<div id=\"footer-wrap\">\n    <div id=\"footer\">\n        <span id=\"tagline\">Made with &hearts; and humor</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"about\">Who Are We?</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"contact\">Contact Us</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"copyright\">&copy; 2012</span>\n    </div>\n</div>\n\n<div id=\"footer-panels\">\n    <div id=\"about-panel\">\n        <div id=\"about-content\">\n            <div id=\"about-img-wrap\" class=\"left\">\n                <img src=\"/static/images/about.jpg\" />\n            </div>\n            <div id=\"about-txt-wrap\" class=\"left\">\n                <span class=\"title\">The Crew</span>\n                <p>Jayeth and Basheus are just two dudes versus the world. In Boston, we have Basheus: a debonair, industrious code monkey who loves all things tech, fitness and music. In Chicago resides Jayeth: imaginative, dexterous and graphics-savvy, spreading visuals and musical prowess to the masses.</p>\n\n                <span class=\"title\">The Task</span>\n                <p>Conquering Boston and Chicago is just one feat on their list. Long-time friends and bandmates, these two have seen many things. Why not rate and assess really minscule, unnecessary, potentially uninteresting things? The world is their oyster.<p>\n\n                <p>Gauntlet thrown; gauntlet picked up.</p>\n            </div>\n        </div>\n    </div>\n    <div id=\"contact-panel\">\n        <div id=\"contact-content\">\n            <div id=\"contact-bash\" class=\"left\">\n                <span class=\"name\">Bash</span>\n\n                <a href=\"https://twitter.com/Bryan_Ash\" class=\"twitter-follow-button\" data-show-count=\"false\" data-show-screen-name=\"false\">Follow @Bryan_Ash</a>\n                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n            </div>\n            <div id=\"contact-jay\" class=\"left\">\n                <span class=\"name\">Jay</span>\n\n                <a href=\"https://twitter.com/JaySpiwak\" class=\"twitter-follow-button\" data-show-count=\"false\" data-show-screen-name=\"false\">Follow @JaySpiwak</a>\n                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n\n                <a class=\"personal-site\" target=\"_blank\" href=\"http://www.jspiwak.com/\">www.jspiwak.com</a>\n            </div>\n            <div class=\"clear\"></div>\n            <div id=\"contact-xtra\">\n                This page is hosted on <a target=\"_blank\" href=\"http://www.nodejitsu.com\">Nodejitsu</a>. Check out the <a target=\"_blank\" href=\"https://github.com/b-ash/versus\">code</a>.\n            </div>\n        </div>\n    </div>\n</div>\n";});
 }});
 
 window.require.define({"views/view": function(exports, require, module) {
