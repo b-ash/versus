@@ -10803,7 +10803,7 @@ li {
 }
 .battle-description {
   font-family: 'helvetica';
-  margin-top: 20px;
+  margin: 20px 20px 0 20px;
 }
 .battle-segway {
   font-size: 20px;
@@ -10905,6 +10905,19 @@ li {
 #footer span#about:hover {
   font-style: italic;
 }
+#footer-panels {
+  font-family: Verdana, Geneva, sans-serif;
+}
+#footer-panels span.title {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+#footer-panels p {
+  display: inline-block;
+  margin-bottom: 20px;
+}
 #footer-panels > div {
   position: fixed;
   left: 50%;
@@ -10913,17 +10926,42 @@ li {
   color: #fff;
   border-radius: 5px 5px 0 0/5px 5px 0 0;
   display: none;
-  text-align: center;
 }
 #footer-panels #about-panel {
-  width: 500px;
-  height: 400px;
-  margin: 0 0 0 -250px;
+  width: 600px;
+  height: 360px;
+  margin: 0 0 0 -300px;
+}
+#footer-panels #about-panel #about-content {
+  margin: 20px 0 0 20px;
+}
+#footer-panels #about-panel #about-content #about-img-wrap {
+  width: 240px;
+  height: 320px;
+  margin-right: 20px;
+}
+#footer-panels #about-panel #about-content #about-txt-wrap {
+  width: 300px;
 }
 #footer-panels #contact-panel {
-  width: 500px;
-  height: 200px;
-  margin: 0 0 0 -250px;
+  width: 440px;
+  height: 300px;
+  margin: 0 0 0 -220px;
+}
+#footer-panels #contact-panel #contact-content {
+  margin: 20px;
+}
+#footer-panels #contact-panel #contact-content #contact-bash {
+  width: 200px;
+}
+#footer-panels #contact-panel #contact-content #contact-jay {
+  width: 200px;
+}
+#footer-panels #contact-panel #contact-content #contact-xtra {
+  text-align: center;
+  position: relative;
+  width: 400px;
+  top: 220px;
 }
 #header-wrap,
 #header-graphic {

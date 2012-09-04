@@ -8,3 +8,8 @@ Current Battles:
     * Giordano's
 
 And we're just getting started...
+
+TODO:
+- Some kind of slide-style images. Highslide?
+- Check cross-browser for scrollpanel consistency
+- Rate something else

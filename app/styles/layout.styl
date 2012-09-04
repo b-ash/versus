@@ -37,6 +37,16 @@ minimum-width()
                 font-style: italic
 
 #footer-panels
+    font-family: Verdana, Geneva, sans-serif
+    span.title
+        display: inline-block
+        font-size: 18px
+        font-weight: bold
+        margin-bottom: 5px
+    p 
+        display: inline-block
+        margin-bottom: 20px
+
     > div
         position: fixed
         left: 50%
@@ -45,15 +55,39 @@ minimum-width()
         color: white
         border-radius 5px 5px 0 0 / 5px 5px 0 0
         display: none
-        text-align: center
 
     #about-panel
-        width: 500px
-        height: 400px
-        margin: 0 0 0 -250px
+        width: 600px
+        height: 360px
+        margin: 0 0 0 -300px
+        
+        #about-content
+            margin: 20px 0 0 20px
+
+            #about-img-wrap
+                width: 240px
+                height: 320px
+                margin-right: 20px
+            #about-txt-wrap
+                width: 300px
 
     #contact-panel
-        width: 500px
-        height: 200px
-        margin: 0 0 0 -250px
+        width: 440px
+        height: 300px
+        margin: 0 0 0 -220px
+
+        #contact-content
+            margin: 20px
+
+            #contact-bash
+                width: 200px
+
+            #contact-jay
+                width: 200px
+
+            #contact-xtra
+                text-align: center
+                position: relative
+                width: 400px
+                top: 220px
     
