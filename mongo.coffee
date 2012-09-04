@@ -3,16 +3,24 @@ Server = mongo.Server
 Db = mongo.Db 
 ObjectId = mongo.BSONPure.ObjectID
 
-creds = require './creds'
-
 
 class Api
     init: (app) =>
         # PROD vs local
-        @server = new Server creds.prod.domain, creds.prod.port, {}
-        @db = new Db creds.prod.db, @server 
-        # @server = new Server creds.local.domain, creds.local.port, {auto_reconnect: true}
-        # @db = new Db creds.local.db, @server 
+        domain = (String) process.env.PROD_DOMAIN
+        port = (Number) process.env.PROD_PORT
+        db = (String) process.env.PROD_DB
+        user = (String) process.env.PROD_USER
+        pass = (String) process.env.PROD_PASS
+
+        # domain = (String) process.env.VERSUS_PROD_DOMAIN
+        # port = (Number) process.env.VERSUS_PROD_PORT
+        # db = (String) process.env.VERSUS_PROD_DB
+        # user = (String) process.env.VERSUS_PROD_USER
+        # pass = (String) process.env.VERSUS_PROD_PASS
+
+        @server = new Server domain, port, {}
+        @db = new Db db, @server 
 
         @db.open (err, db) =>
             if err
@@ -22,7 +30,7 @@ class Api
             console.log 'Connected to mongo.'
 
             # PROD vs local
-            @db.authenticate creds.prod.user, creds.prod.pass, (err, replies) =>
+            @db.authenticate user, pass, (err, replies) =>
                 if err 
                     console.error 'Couldnt authenticate to mongo.'
                     throw err 
