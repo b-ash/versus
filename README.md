@@ -6,6 +6,7 @@ Current Battles:
 - Chicago's best deep dish pizza
     * Lou Malnati's
     * Giordano's
+    * Original Gino's East
 
 And we're just getting started...
 
