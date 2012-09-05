@@ -13,7 +13,6 @@ And we're just getting started...
 
 TODO:
 
-- Some kind of slide-style images. Highslide?
-- Better ENV processing
+- Some kind of slide-style images. Highslide? Fancybox Gallery?
 - Check cross-browser for scrollpanel consistency
 - Rate something else
