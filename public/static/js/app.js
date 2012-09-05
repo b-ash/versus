@@ -291,6 +291,27 @@ window.require.define({"lib/view_helper": function(exports, require, module) {
     }
     return buffer;
   });
+
+  Handlebars.registerHelper('total', function(contenders, fn) {
+    var buffer, contender, criteria, name, score, total, _i, _j, _len, _len1, _ref;
+    buffer = '';
+    for (_i = 0, _len = contenders.length; _i < _len; _i++) {
+      contender = contenders[_i];
+      total = 0;
+      _ref = contender.criteria;
+      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+        criteria = _ref[_j];
+        for (name in criteria) {
+          score = criteria[name];
+          total += score;
+        }
+      }
+      buffer += fn({
+        val: total
+      });
+    }
+    return buffer;
+  });
   
 }});
 
@@ -674,17 +695,28 @@ window.require.define({"views/templates/battle": function(exports, require, modu
   function program6(depth0,data) {
     
     var buffer = "", stack1;
-    buffer += "\n    <div class=\"explanation\">\n        <div>\n            <span>";
-    foundHelper = helpers.name;
-    stack1 = foundHelper || depth0.name;
+    buffer += "\n                    <td>\n                        <div class=\"rank-wrap\">\n                            <div class=\"rank\">";
+    foundHelper = helpers.val;
+    stack1 = foundHelper || depth0.val;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
-    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</span>\n        </div>\n        <div>\n            <p>";
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "val", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</div>\n                        </div>\n                    </td>\n                    ";
+    return buffer;}
+
+  function program8(depth0,data) {
+    
+    var buffer = "", stack1;
+    buffer += "\n    <div class=\"explanation\">\n        <blockquote>\n            <p>";
     foundHelper = helpers.review;
     stack1 = foundHelper || depth0.review;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "review", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</p>\n        </div>\n        <div class=\"clear\"></div>\n    </div>\n    ";
+    buffer += escapeExpression(stack1) + "</p>\n        </blockquote>\n        <p>";
+    foundHelper = helpers.name;
+    stack1 = foundHelper || depth0.name;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "name", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "</p>\n    </div>\n    ";
     return buffer;}
 
     buffer += "<div class=\"logo-wrap\">\n    <div class=\"logo ";
@@ -721,17 +753,29 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(foundHelper && typeof stack3 === functionType) { stack1 = stack3.call(depth0, stack2, stack1, tmp1); }
     else { stack1 = blockHelperMissing.call(depth0, stack3, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n                <!-- Totals! -->\n                <tr class=\"break\">\n                    <td colspan=\"4\">\n                        <hr size=\"2\"></hr>\n                    </td>\n                <tr>\n                    <td class=\"criteria\">\n                        <span class=\"name\">Total</span>\n                    </td>\n                    ";
+    foundHelper = helpers.contenders;
+    stack1 = foundHelper || depth0.contenders;
+    foundHelper = helpers.total;
+    stack2 = foundHelper || depth0.total;
+    tmp1 = self.program(6, program6, data);
+    tmp1.hash = {};
+    tmp1.fn = tmp1;
+    tmp1.inverse = self.noop;
+    if(foundHelper && typeof stack2 === functionType) { stack1 = stack2.call(depth0, stack1, tmp1); }
+    else { stack1 = blockHelperMissing.call(depth0, stack2, stack1, tmp1); }
+    if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n</div>\n\n<div class=\"explanations\">\n    ";
     foundHelper = helpers.explanations;
     stack1 = foundHelper || depth0.explanations;
     stack2 = helpers.each;
-    tmp1 = self.program(6, program6, data);
+    tmp1 = self.program(8, program8, data);
     tmp1.hash = {};
     tmp1.fn = tmp1;
     tmp1.inverse = self.noop;
     stack1 = stack2.call(depth0, stack1, tmp1);
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n</div>\n";
+    buffer += "\n    <div class=\"clear\"></div>\n</div>\n";
     return buffer;});
 }});
 
@@ -750,7 +794,7 @@ window.require.define({"views/templates/index": function(exports, require, modul
     var foundHelper, self=this;
 
 
-    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n\n<div id=\"footer-wrap\">\n    <div id=\"footer\">\n        <span id=\"tagline\">Made with &hearts; and humor</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"about\">Who Are We?</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"contact\">Contact Us</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"copyright\">&copy; 2012</span>\n    </div>\n</div>\n\n<div id=\"footer-panels\">\n    <div id=\"about-panel\">\n        <div id=\"about-content\">\n            <div id=\"about-img-wrap\" class=\"left\">\n                <img src=\"/static/images/about.jpg\" />\n            </div>\n            <div id=\"about-txt-wrap\" class=\"left\">\n                <span class=\"title\">The Crew</span>\n                <p>Jayeth and Basheus are just two dudes versus the world. In Boston, we have Basheus: a debonair, industrious code monkey who loves all things tech, fitness and music. In Chicago resides Jayeth: imaginative, dexterous and graphics-savvy, spreading visuals and musical prowess to the masses.</p>\n\n                <span class=\"title\">The Task</span>\n                <p>Conquering Boston and Chicago is just one feat on their list. Long-time friends and bandmates, these two have seen many things. Why not rate and assess really minscule, unnecessary, potentially uninteresting things? The world is their oyster.<p>\n\n                <p>Gauntlet thrown; gauntlet picked up.</p>\n            </div>\n        </div>\n    </div>\n    <div id=\"contact-panel\">\n        <div id=\"contact-content\">\n            <div id=\"contact-bash\" class=\"left\">\n                <span class=\"name\">Bash</span>\n\n                <a href=\"https://twitter.com/Bryan_Ash\" class=\"twitter-follow-button\" data-show-count=\"false\" data-show-screen-name=\"false\">Follow @Bryan_Ash</a>\n                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n\n                <a class=\"personal-site\" target=\"_blank\" href=\"https://github.com/b-ash\">github</a>\n            </div>\n            <div id=\"contact-jay\" class=\"left\">\n                <span class=\"name\">Jay</span>\n\n                <a href=\"https://twitter.com/JaySpiwak\" class=\"twitter-follow-button\" data-show-count=\"false\" data-show-screen-name=\"false\">Follow @JaySpiwak</a>\n                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n\n                <a class=\"personal-site\" target=\"_blank\" href=\"http://www.jspiwak.com/\">www.jspiwak.com</a>\n            </div>\n            <div class=\"clear\"></div>\n            <div id=\"contact-xtra\">\n                This page is hosted on <a target=\"_blank\" href=\"http://www.nodejitsu.com\">Nodejitsu</a>. Check out the <a target=\"_blank\" href=\"https://github.com/b-ash/versus\">code</a>.\n            </div>\n        </div>\n    </div>\n</div>\n";});
+    return "<div id=\"header-wrap\">\n    <div id=\"header\"></div>\n    <div id=\"header-graphic-wrap\">\n        <div id=\"header-graphic\"></div>\n    </div>\n</div>\n\n<div id=\"index-view\">\n    <div id=\"list\"></div>\n</div>\n\n<div id=\"footer-wrap\">\n    <div id=\"footer\">\n        <span id=\"tagline\">Made with &hearts; and humor</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"about\">Who Are We?</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"contact\">Contact Us</span>\n        <span class=\"inline-divider\">|</span>\n        <span id=\"copyright\">&copy; 2012</span>\n    </div>\n</div>\n\n<div id=\"footer-panels\">\n    <div id=\"about-panel\">\n        <div id=\"about-content\">\n            <div id=\"about-img-wrap\" class=\"left\">\n                <img src=\"/static/images/about.jpg\" />\n            </div>\n            <div id=\"about-txt-wrap\" class=\"left\">\n                <span class=\"title\">The Crew</span>\n                <p>Jayeth and Basheus are just two dudes versus the world. In Boston, we have Basheus: a debonair, industrious code monkey who loves all things tech, fitness and music. In Chicago resides Jayeth: imaginative, dexterous and graphics-savvy, spreading visuals and musical prowess to the masses.</p>\n\n                <span class=\"title\">The Task</span>\n                <p>Conquering Boston and Chicago is just one feat on their list. Long-time friends and bandmates, these two have seen many things. Why not rate and assess really minscule, unnecessary, potentially uninteresting things? The world is their oyster.<p>\n\n                <p>Gauntlet thrown; gauntlet picked up.</p>\n            </div>\n        </div>\n    </div>\n    <div id=\"contact-panel\">\n        <div id=\"contact-content\">\n            <div id=\"contact-jay\" class=\"left\">\n                <span class=\"name\">Jay</span>\n\n                <a href=\"https://twitter.com/JaySpiwak\" class=\"twitter-follow-button\" data-show-count=\"false\" data-show-screen-name=\"false\">Follow @JaySpiwak</a>\n                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n\n                <a class=\"personal-site\" target=\"_blank\" href=\"http://www.jspiwak.com/\">www.jspiwak.com</a>\n            </div>\n            <div id=\"contact-bash\" class=\"left\">\n                <span class=\"name\">Bash</span>\n\n                <a href=\"https://twitter.com/Bryan_Ash\" class=\"twitter-follow-button\" data-show-count=\"false\" data-show-screen-name=\"false\">Follow @Bryan_Ash</a>\n                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>\n\n                <a class=\"personal-site\" target=\"_blank\" href=\"https://github.com/b-ash\">github</a>\n            </div>\n            <div class=\"clear\"></div>\n            <div id=\"contact-xtra\">\n                This page is powered by <a target=\"_blank\" href=\"http://www.nodejitsu.com\">Nodejitsu</a>. Check out the <a target=\"_blank\" href=\"https://github.com/b-ash/versus\">code</a>.\n            </div>\n        </div>\n    </div>\n</div>\n";});
 }});
 
 window.require.define({"views/view": function(exports, require, module) {

@@ -3,24 +3,15 @@ Server = mongo.Server
 Db = mongo.Db 
 ObjectId = mongo.BSONPure.ObjectID
 
+env = require './env'
+
 
 class Api
     init: (app) =>
-        # PROD vs local
-        domain = (String) process.env.PROD_DOMAIN
-        port = (Number) process.env.PROD_PORT
-        db = (String) process.env.PROD_DB
-        user = (String) process.env.PROD_USER
-        pass = (String) process.env.PROD_PASS
+        console.log "Connecting to mongo with #{JSON.stringify env}"
 
-        # domain = (String) process.env.VERSUS_PROD_DOMAIN
-        # port = (Number) process.env.VERSUS_PROD_PORT
-        # db = (String) process.env.VERSUS_PROD_DB
-        # user = (String) process.env.VERSUS_PROD_USER
-        # pass = (String) process.env.VERSUS_PROD_PASS
-
-        @server = new Server domain, port, {}
-        @db = new Db db, @server 
+        @server = new Server env.domain, env.port, {}
+        @db = new Db env.db, @server 
 
         @db.open (err, db) =>
             if err
@@ -29,15 +20,13 @@ class Api
 
             console.log 'Connected to mongo.'
 
-            # PROD vs local
-            @db.authenticate user, pass, (err, replies) =>
+            @db.authenticate env.user, env.pass, (err, replies) =>
                 if err 
                     console.error 'Couldnt authenticate to mongo.'
                     throw err 
 
                 console.log 'Authenticated to mongo'
                 @collections().serve app
-            #@collections().serve app
         @
 
     collections: =>

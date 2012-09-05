@@ -36,6 +36,22 @@
                     {{/pluck_criteria}}
                 </tr>
                 {{/keys}}
+                <!-- Totals! -->
+                <tr class="break">
+                    <td colspan="4">
+                        <hr size="2"></hr>
+                    </td>
+                <tr>
+                    <td class="criteria">
+                        <span class="name">Total</span>
+                    </td>
+                    {{#total contenders}}
+                    <td>
+                        <div class="rank-wrap">
+                            <div class="rank">{{val}}</div>
+                        </div>
+                    </td>
+                    {{/total}}
             </tbody>
         </table>
     </div>
@@ -48,13 +64,11 @@
 <div class="explanations">
     {{#each explanations}}
     <div class="explanation">
-        <div>
-            <span>{{name}}</span>
-        </div>
-        <div>
+        <blockquote>
             <p>{{review}}</p>
-        </div>
-        <div class="clear"></div>
+        </blockquote>
+        <p>{{name}}</p>
     </div>
     {{/each}}
+    <div class="clear"></div>
 </div>

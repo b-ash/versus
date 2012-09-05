@@ -28,6 +28,9 @@
             tr
                 height: 50px
 
+            tr.break
+                height: 30px
+
             .criteria 
                 vertical-align: middle
 
@@ -43,6 +46,10 @@
             th.contender
                 width: 90px
                 text-align: center
+
+            tr.break td hr
+                margin: 18px 0 0 0
+                width: 676px
             
             .rank-wrap
                 width: 26px
@@ -67,14 +74,63 @@
 
                 color: #666
 
-.explanation
-    // TODO: thought bubbles for our reviews
-    margin: 20px
+.explanations
+    margin-bottom: 30px
 
-    div
-        margin-right: 10px
+    .explanation:first-child
+        float: left
+        width: 470px
 
-    span
-        font-weight: bold
-        font-size: 18px
+        > blockquote
+            position: relative
+            padding: 15px 30px
+            color: #666
+            background: #DDD
+            border-radius 10px
+            border: 0
+
+            &::after
+                content: ""
+                position: absolute
+                bottom: -50px
+                left: 50px
+                border-width: 0 20px 50px 0
+                border-style: solid
+                border-color: transparent #DDD
+                display: block
+                width: 0
+
+        > p 
+            margin: 15px 0 2em 85px
+            font-style: italic
+            font-size: 20px
+
+    .explanation:nth-child(2)
+        float: right
+        width: 470px
+
+        > blockquote
+            position: relative
+            padding: 15px 30px
+            color: #666
+            background: #DDD
+            border-radius 10px
+            border: 0
+
+            &::before
+                content: ""
+                position: absolute
+                bottom: -50px
+                right: 50px
+                border-width: 0 0 50px 20px
+                border-style: solid
+                border-color: transparent #DDD
+                display: block
+                width: 0
+
+        > p 
+            margin: 15px 85px 2em 0
+            text-align: right
+            font-style: italic
+            font-size: 20px
 

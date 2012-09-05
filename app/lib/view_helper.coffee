@@ -39,3 +39,15 @@ Handlebars.registerHelper 'pluck', (list, fn) ->
             buffer += fn {key: k, val: v}
 
     return buffer
+
+Handlebars.registerHelper 'total', (contenders, fn) ->
+    buffer = ''
+
+    for contender in contenders
+        total = 0
+        for criteria in contender.criteria
+            for name, score of criteria 
+                total += score
+        buffer += fn {val: total}
+
+    return buffer

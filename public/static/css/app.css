@@ -10770,6 +10770,9 @@ a:hover,
 a:visited {
   color: #08c;
 }
+a {
+  color: #06c;
+}
 li {
   list-style: none;
 }
@@ -10824,6 +10827,9 @@ li {
 .battle-wrap .battle-inner table tr {
   height: 50px;
 }
+.battle-wrap .battle-inner table tr.break {
+  height: 30px;
+}
 .battle-wrap .battle-inner table .criteria {
   vertical-align: middle;
 }
@@ -10841,6 +10847,10 @@ li {
 .battle-wrap .battle-inner table th.contender {
   width: 90px;
   text-align: center;
+}
+.battle-wrap .battle-inner table tr.break td hr {
+  margin: 18px 0 0 0;
+  width: 676px;
 }
 .battle-wrap .battle-inner table .rank-wrap {
   width: 26px;
@@ -10860,15 +10870,65 @@ li {
   text-align: center;
   color: #666;
 }
-.explanation {
-  margin: 20px;
+.explanations {
+  margin-bottom: 30px;
 }
-.explanation div {
-  margin-right: 10px;
+.explanations .explanation:first-child {
+  float: left;
+  width: 470px;
 }
-.explanation span {
-  font-weight: bold;
-  font-size: 18px;
+.explanations .explanation:first-child > blockquote {
+  position: relative;
+  padding: 15px 30px;
+  color: #666;
+  background: #ddd;
+  border-radius: 10px;
+  border: 0;
+}
+.explanations .explanation:first-child > blockquote::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  left: 50px;
+  border-width: 0 20px 50px 0;
+  border-style: solid;
+  border-color: transparent #ddd;
+  display: block;
+  width: 0;
+}
+.explanations .explanation:first-child > p {
+  margin: 15px 0 2em 85px;
+  font-style: italic;
+  font-size: 20px;
+}
+.explanations .explanation:nth-child(2) {
+  float: right;
+  width: 470px;
+}
+.explanations .explanation:nth-child(2) > blockquote {
+  position: relative;
+  padding: 15px 30px;
+  color: #666;
+  background: #ddd;
+  border-radius: 10px;
+  border: 0;
+}
+.explanations .explanation:nth-child(2) > blockquote::before {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  right: 50px;
+  border-width: 0 0 50px 20px;
+  border-style: solid;
+  border-color: transparent #ddd;
+  display: block;
+  width: 0;
+}
+.explanations .explanation:nth-child(2) > p {
+  margin: 15px 85px 2em 0;
+  text-align: right;
+  font-style: italic;
+  font-size: 20px;
 }
 .main-page {
   min-width: 950px;
