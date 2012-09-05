@@ -10969,6 +10969,7 @@ li {
   font-style: italic;
 }
 #footer-panels {
+  z-index: 10000;
   font-family: Verdana, Geneva, sans-serif;
 }
 #footer-panels span.title {
@@ -10989,6 +10990,10 @@ li {
   color: #fff;
   border-radius: 5px 5px 0 0/5px 5px 0 0;
   display: none;
+}
+#footer-panels #about-panel,
+#footer-panels #contact-panel {
+  z-index: 10000;
 }
 #footer-panels #about-panel {
   width: 600px;
@@ -11041,6 +11046,7 @@ li {
   width: 100%;
   height: 150px;
   float: left;
+  z-index: 1000;
 }
 #header-wrap #header-graphic-wrap,
 #header-graphic #header-graphic-wrap {
@@ -11052,6 +11058,7 @@ li {
 #header-wrap #header-graphic,
 #header-graphic #header-graphic {
   background: transparent url("/static/images/header_graphic.png");
+  z-index: 1001;
   width: 950px;
   margin: 0 auto;
 }
@@ -11064,11 +11071,13 @@ li {
   position: relative;
   width: 100%;
   height: 155px;
+  z-index: 1002;
 }
 .logo {
   width: 950px;
   height: 155px;
   margin: 0 auto;
+  z-index: 1002;
 }
 .logo.floating {
   left: 50%;
