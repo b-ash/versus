@@ -711,7 +711,8 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     stack1 = foundHelper || depth0.review;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "review", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "</p>\n        </blockquote>\n        <p>";
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "</p>\n        </blockquote>\n        <p>";
     foundHelper = helpers.name;
     stack1 = foundHelper || depth0.name;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
@@ -765,7 +766,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(foundHelper && typeof stack2 === functionType) { stack1 = stack2.call(depth0, stack1, tmp1); }
     else { stack1 = blockHelperMissing.call(depth0, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n    <p class=\"subtitle\">(scroll for full text)</p>\n</div>\n\n<div class=\"explanations\">\n    ";
+    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Proof -------</p>\n    <p class=\"subtitle\">(pictures coming soon!)</p>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n    <p class=\"subtitle\">(scroll for full text)</p>\n</div>\n\n<div class=\"explanations\">\n    ";
     foundHelper = helpers.explanations;
     stack1 = foundHelper || depth0.explanations;
     stack2 = helpers.each;
