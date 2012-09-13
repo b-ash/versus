@@ -765,7 +765,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(foundHelper && typeof stack2 === functionType) { stack1 = stack2.call(depth0, stack1, tmp1); }
     else { stack1 = blockHelperMissing.call(depth0, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n</div>\n\n<div class=\"explanations\">\n    ";
+    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n    <p class=\"subtitle\">(scroll for full text)</p>\n</div>\n\n<div class=\"explanations\">\n    ";
     foundHelper = helpers.explanations;
     stack1 = foundHelper || depth0.explanations;
     stack2 = helpers.each;

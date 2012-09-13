@@ -1,3 +1,13 @@
+speechBubble()
+    content: ""
+    position: absolute
+    bottom: -50px
+    border-style: solid
+    border-color: transparent #DDD
+    display: block
+    width: 0
+
+
 #index-view
     width: 100%
 
@@ -14,6 +24,11 @@
     font-weight: bold
     text-align: center
     margin: 20px
+
+p.subtitle
+    font-weight: normal
+    color: #666
+    font-size: 12px
 
 .battle-wrap
     width: 100%
@@ -77,8 +92,7 @@
 .explanations
     margin-bottom: 30px
 
-    .explanation:first-child
-        float: left
+    .explanation:first-child, .explanation:nth-child(2)
         width: 470px
 
         > blockquote
@@ -89,48 +103,35 @@
             border-radius 10px
             border: 0
 
-            &::after
-                content: ""
-                position: absolute
-                bottom: -50px
-                left: 50px
-                border-width: 0 20px 50px 0
-                border-style: solid
-                border-color: transparent #DDD
-                display: block
-                width: 0
+            > p 
+                height: 300px
+                overflow: scroll
 
         > p 
-            margin: 15px 0 2em 85px
             font-style: italic
             font-size: 20px
+
+
+    .explanation:first-child
+        float: left
+
+        > blockquote::after
+            speechBubble()
+            left: 50px
+            border-width: 0 20px 50px 0
+
+        > p
+            text-align: left
+            margin: 15px 0 2em 85px
 
     .explanation:nth-child(2)
         float: right
-        width: 470px
 
-        > blockquote
-            position: relative
-            padding: 15px 30px
-            color: #666
-            background: #DDD
-            border-radius 10px
-            border: 0
-
-            &::before
-                content: ""
-                position: absolute
-                bottom: -50px
-                right: 50px
-                border-width: 0 0 50px 20px
-                border-style: solid
-                border-color: transparent #DDD
-                display: block
-                width: 0
+        > blockquote::before
+            speechBubble()
+            right: 50px
+            border-width: 0 0 50px 20px
 
         > p 
-            margin: 15px 85px 2em 0
             text-align: right
-            font-style: italic
-            font-size: 20px
-
+            margin: 15px 85px 2em 0

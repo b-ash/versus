@@ -10814,6 +10814,11 @@ li {
   text-align: center;
   margin: 20px;
 }
+p.subtitle {
+  font-weight: normal;
+  color: #666;
+  font-size: 12px;
+}
 .battle-wrap {
   width: 100%;
 }
@@ -10873,38 +10878,11 @@ li {
 .explanations {
   margin-bottom: 30px;
 }
-.explanations .explanation:first-child {
-  float: left;
-  width: 470px;
-}
-.explanations .explanation:first-child > blockquote {
-  position: relative;
-  padding: 15px 30px;
-  color: #666;
-  background: #ddd;
-  border-radius: 10px;
-  border: 0;
-}
-.explanations .explanation:first-child > blockquote::after {
-  content: "";
-  position: absolute;
-  bottom: -50px;
-  left: 50px;
-  border-width: 0 20px 50px 0;
-  border-style: solid;
-  border-color: transparent #ddd;
-  display: block;
-  width: 0;
-}
-.explanations .explanation:first-child > p {
-  margin: 15px 0 2em 85px;
-  font-style: italic;
-  font-size: 20px;
-}
+.explanations .explanation:first-child,
 .explanations .explanation:nth-child(2) {
-  float: right;
   width: 470px;
 }
+.explanations .explanation:first-child > blockquote,
 .explanations .explanation:nth-child(2) > blockquote {
   position: relative;
   padding: 15px 30px;
@@ -10913,22 +10891,51 @@ li {
   border-radius: 10px;
   border: 0;
 }
-.explanations .explanation:nth-child(2) > blockquote::before {
+.explanations .explanation:first-child > blockquote > p,
+.explanations .explanation:nth-child(2) > blockquote > p {
+  height: 300px;
+  overflow: scroll;
+}
+.explanations .explanation:first-child > p,
+.explanations .explanation:nth-child(2) > p {
+  font-style: italic;
+  font-size: 20px;
+}
+.explanations .explanation:first-child {
+  float: left;
+}
+.explanations .explanation:first-child > blockquote::after {
   content: "";
   position: absolute;
   bottom: -50px;
-  right: 50px;
-  border-width: 0 0 50px 20px;
   border-style: solid;
   border-color: transparent #ddd;
   display: block;
   width: 0;
+  left: 50px;
+  border-width: 0 20px 50px 0;
+}
+.explanations .explanation:first-child > p {
+  text-align: left;
+  margin: 15px 0 2em 85px;
+}
+.explanations .explanation:nth-child(2) {
+  float: right;
+}
+.explanations .explanation:nth-child(2) > blockquote::before {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  border-style: solid;
+  border-color: transparent #ddd;
+  display: block;
+  width: 0;
+  right: 50px;
+  border-width: 0 0 50px 20px;
 }
 .explanations .explanation:nth-child(2) > p {
-  margin: 15px 85px 2em 0;
   text-align: right;
-  font-style: italic;
-  font-size: 20px;
+  margin: 15px 85px 2em 0;
 }
 .main-page {
   min-width: 950px;
