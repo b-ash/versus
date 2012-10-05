@@ -705,6 +705,31 @@ window.require.define({"views/templates/battle": function(exports, require, modu
 
   function program8(depth0,data) {
     
+    var buffer = "", stack1, stack2;
+    buffer += "\n    <table class=\"pictures\">\n        <thead>\n            <tr>\n                <td></td>\n                <td></td>\n                <td></td>\n                <td></td>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                ";
+    foundHelper = helpers.pictures;
+    stack1 = foundHelper || depth0.pictures;
+    stack2 = helpers.each;
+    tmp1 = self.program(9, program9, data);
+    tmp1.hash = {};
+    tmp1.fn = tmp1;
+    tmp1.inverse = self.noop;
+    stack1 = stack2.call(depth0, stack1, tmp1);
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n            </tr>\n        </tbody>\n    </table>\n    ";
+    return buffer;}
+  function program9(depth0,data) {
+    
+    var buffer = "", stack1;
+    buffer += "\n                <td class=\"pic\">\n                    <img src=\"";
+    stack1 = depth0;
+    if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+    else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this", { hash: {} }); }
+    buffer += escapeExpression(stack1) + "\" />\n                </td>\n                ";
+    return buffer;}
+
+  function program11(depth0,data) {
+    
     var buffer = "", stack1;
     buffer += "\n    <div class=\"explanation\">\n        <blockquote>\n            <p>";
     foundHelper = helpers.review;
@@ -740,7 +765,7 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     tmp1.inverse = self.noop;
     stack1 = stack2.call(depth0, stack1, tmp1);
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n                </tr>\n            <tbody>\n                ";
+    buffer += "\n                </tr>\n            </thead>\n            <tbody>\n                ";
     foundHelper = helpers.contenders;
     stack1 = foundHelper || depth0.contenders;
     foundHelper = helpers.criteria;
@@ -766,11 +791,21 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(foundHelper && typeof stack2 === functionType) { stack1 = stack2.call(depth0, stack1, tmp1); }
     else { stack1 = blockHelperMissing.call(depth0, stack2, stack1, tmp1); }
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Proof -------</p>\n    <p class=\"subtitle\">(pictures coming soon!)</p>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n    <p class=\"subtitle\">(scroll for full text)</p>\n</div>\n\n<div class=\"explanations\">\n    ";
+    buffer += "\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Proof -------</p>\n</div>\n<div class=\"battle-pictures-wrap\">\n    ";
+    foundHelper = helpers.contenders;
+    stack1 = foundHelper || depth0.contenders;
+    stack2 = helpers.each;
+    tmp1 = self.program(8, program8, data);
+    tmp1.hash = {};
+    tmp1.fn = tmp1;
+    tmp1.inverse = self.noop;
+    stack1 = stack2.call(depth0, stack1, tmp1);
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n</div>\n\n<div class=\"battle-segway\">\n    <p>------- The Verdicts -------</p>\n    <p class=\"subtitle\">(scroll for full text)</p>\n</div>\n\n<div class=\"explanations\">\n    ";
     foundHelper = helpers.explanations;
     stack1 = foundHelper || depth0.explanations;
     stack2 = helpers.each;
-    tmp1 = self.program(8, program8, data);
+    tmp1 = self.program(11, program11, data);
     tmp1.hash = {};
     tmp1.fn = tmp1;
     tmp1.inverse = self.noop;

@@ -20,6 +20,7 @@
                     <th class="contender">{{name}}</th>
                     {{/each}}
                 </tr>
+            </thead>
             <tbody>
                 {{#keys criteria contenders}}
                 <tr>
@@ -52,6 +53,7 @@
                         </div>
                     </td>
                     {{/total}}
+                </tr>
             </tbody>
         </table>
     </div>
@@ -59,7 +61,29 @@
 
 <div class="battle-segway">
     <p>------- The Proof -------</p>
-    <p class="subtitle">(pictures coming soon!)</p>
+</div>
+<div class="battle-pictures-wrap">
+    {{#each contenders}}
+    <table class="pictures">
+        <thead>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {{#each pictures}}
+                <td class="pic">
+                    <img src="{{this}}" />
+                </td>
+                {{/each}}
+            </tr>
+        </tbody>
+    </table>
+    {{/each}}
 </div>
 
 <div class="battle-segway">
