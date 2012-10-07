@@ -90,9 +90,20 @@ p.subtitle
                 color: #666
 
 .battle-pictures-wrap
-    td > img
-        height: 225px
+    .pic-wrap 
         width: 225px
+        height: 225px
+        z-index: 0
+
+        .pic 
+            position: relative
+            z-index: 0
+
+            img
+                position: relative
+                height: 225px
+                width: 225px
+        
 
 .explanations
     margin-bottom: 30px

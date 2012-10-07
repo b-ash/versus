@@ -593,6 +593,8 @@ window.require.define({"views/index": function(exports, require, module) {
     __extends(BattleView, _super);
 
     function BattleView() {
+      this.afterRender = __bind(this.afterRender, this);
+
       this.initSlider = __bind(this.initSlider, this);
 
       this.getRenderData = __bind(this.getRenderData, this);
@@ -625,6 +627,46 @@ window.require.define({"views/index": function(exports, require, module) {
             return $el.removeClass('floating');
           }
         }
+      });
+    };
+
+    BattleView.prototype.afterRender = function() {
+      var $picTables, $pics;
+      $picTables = this.$('.battle-pictures-wrap table');
+      $pics = $picTables.find('.pic');
+      $pics.find('img').hover(function() {
+        var $el;
+        $el = $(this);
+        $el.parent().css('z-index', 1);
+        return $el.animate({
+          height: 325,
+          width: 325,
+          left: '-=50',
+          top: '-=50'
+        }, 'fast');
+      }, function() {
+        var $el;
+        $el = $(this);
+        $el.parent().css('z-index', 0);
+        return $el.animate({
+          height: 225,
+          width: 225,
+          left: '+=50',
+          top: '+=50'
+        }, 'fast');
+      });
+      return $pics.each(function(index, el) {
+        var $el;
+        $el = $(el);
+        return setTimeout(function() {
+          var pos;
+          pos = $el.position();
+          return $el.css({
+            position: 'absolute',
+            left: pos.left,
+            top: pos.top
+          });
+        }, 500);
       });
     };
 
@@ -721,11 +763,11 @@ window.require.define({"views/templates/battle": function(exports, require, modu
   function program9(depth0,data) {
     
     var buffer = "", stack1;
-    buffer += "\n                <td class=\"pic\">\n                    <img src=\"";
+    buffer += "\n                <td>\n                    <div class=\"pic-wrap\">\n                        <div class=\"pic\">\n                            <img src=\"";
     stack1 = depth0;
     if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
     else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "this", { hash: {} }); }
-    buffer += escapeExpression(stack1) + "\" />\n                </td>\n                ";
+    buffer += escapeExpression(stack1) + "\" />\n                        </div>\n                    </div>\n                </td>\n                ";
     return buffer;}
 
   function program11(depth0,data) {

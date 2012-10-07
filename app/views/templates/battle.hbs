@@ -76,8 +76,12 @@
         <tbody>
             <tr>
                 {{#each pictures}}
-                <td class="pic">
-                    <img src="{{this}}" />
+                <td>
+                    <div class="pic-wrap">
+                        <div class="pic">
+                            <img src="{{this}}" />
+                        </div>
+                    </div>
                 </td>
                 {{/each}}
             </tr>

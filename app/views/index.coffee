@@ -96,5 +96,25 @@ class BattleView extends View
                 else
                     $el.removeClass 'floating'
 
+    afterRender: =>
+        $picTables = @$ '.battle-pictures-wrap table'
+        $pics = $picTables.find '.pic'
+        $pics.find('img').hover(() -> # hover in
+            $el = $ this
+            $el.parent().css 'z-index', 1
+            $el.animate {height: 325, width: 325, left: '-=50', top: '-=50'}, 'fast'
+        , () -> # hover out
+            $el = $ this 
+            $el.parent().css 'z-index', 0
+            $el.animate {height: 225, width: 225, left: '+=50', top: '+=50'}, 'fast'
+        )
+
+        $pics.each (index, el) ->
+            $el = $ el 
+            setTimeout () ->
+                pos = $el.position()
+                $el.css {position: 'absolute', left: pos.left, top: pos.top}
+            , 500
+
 
 module.exports = IndexView
