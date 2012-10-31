@@ -105,8 +105,8 @@ class BattleView extends View
             $el.animate {height: 325, width: 325, left: '-=50', top: '-=50'}, 'fast'
         , () -> # hover out
             $el = $ this 
-            $el.parent().css 'z-index', 0
-            $el.animate {height: 225, width: 225, left: '+=50', top: '+=50'}, 'fast'
+            $el.animate {height: 225, width: 225, left: '+=50', top: '+=50'}, 'fast', ->
+                $el.parent().css 'z-index', 0
         )
 
         $pics.each (index, el) ->
