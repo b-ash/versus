@@ -647,13 +647,14 @@ window.require.define({"views/index": function(exports, require, module) {
       }, function() {
         var $el;
         $el = $(this);
-        $el.parent().css('z-index', 0);
         return $el.animate({
           height: 225,
           width: 225,
           left: '+=50',
           top: '+=50'
-        }, 'fast');
+        }, 'fast', function() {
+          return $el.parent().css('z-index', 0);
+        });
       });
       return $pics.each(function(index, el) {
         var $el;
