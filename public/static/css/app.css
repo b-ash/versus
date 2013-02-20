@@ -11106,9 +11106,7 @@ p.subtitle {
   margin-left: -475px;
 }
 .logo.deep-dish-pizza {
-  background: transparent url("/static/images/deep-dish-pizza.png");
-  background-repeat: no-repeat;
-  background-position-y: -70px;
+  background: url("/static/images/deep-dish-pizza.png") no-repeat scroll 0 -71px transparent;
 }
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.
