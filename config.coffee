@@ -12,12 +12,9 @@ exports.config =
                 before: [
                     'vendor/scripts/console-helper.js'
                     'vendor/scripts/jquery.js'
-                    'vendor/scripts/jquery-ui-1.8.20.js'
-                    'vendor/scripts/jquery.blockui.js'
                     'vendor/scripts/jquery.scrollpanel.js'
                     'vendor/scripts/underscore.js'
                     'vendor/scripts/backbone.js'
-                    'vendor/scripts/chosen.jquery.js'
                     'vendor/scripts/moment.js'
                 ]
 
@@ -27,11 +24,9 @@ exports.config =
             order:
                 before: [
                     'vendor/styles/normalize.css'
-                    'vendor/styles/jquery-ui-1.8.20.css'
-                    'vendor/styles/chosen.css'
                     'vendor/styles/bootstrap.css'
+                    'vendor/styles/helpers.css'
                 ]
-                after: ['vendor/styles/helpers.css']
 
         templates:
             defaultExtension: 'hbs'
@@ -40,6 +35,6 @@ exports.config =
     minify: no
 
     server:
-        path: 'server.coffee'
-        port: 3334
+        path: 'app.coffee'
+        port: 4000
         base: ''

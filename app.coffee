@@ -1,14 +1,9 @@
-fs = require 'fs'
 express = require 'express'
-sysPath = require 'path'
-
-Db = require './mongo'
-
-fullPath = sysPath.resolve 'config'
-{config} = require fullPath
+{config} = require './config'
+data = require './data/battles'
 
 exports.startServer = (port, path, callback) ->
-    app = express.createServer express.logger()
+    app = express express.logger()
     port = parseInt(process.env.PORT or port, 10)
 
     # Express init
@@ -23,13 +18,12 @@ exports.startServer = (port, path, callback) ->
 
     # Serve our static assets
     app.use express.static("#{__dirname}/#{path}")
-    app.get "/create", (req, res) ->
-        res.sendfile "#{__dirname}/#{path}/index.html"
-
-    api = new Db().init app
+    app.get "/api/v1/battles/", (req, res) ->
+        res.json 
 
     # Serve it up!
-    app.listen port, -> console.info "Listening on #{port}, dawg"
+    app.listen port, -> 
+        console.info "Listening on #{port}, dawg"
     app
 
 # We only start this up if we're not using brunch to run it. Pretty hacky, I know.
