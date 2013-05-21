@@ -1,3 +1,4 @@
+module.exports = [
 {
     "name":"deep-dish-pizza",
     "description":"Jayeth and Basheus III take on their first challenge: who has the best deep dish pizza in Chicago? Can they figure it out without their hearts exploding? Stay tuned to find out.",
@@ -88,3 +89,4 @@
         }
     ]
 }
+]
