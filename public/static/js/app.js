@@ -79,9 +79,8 @@ window.require.define({"application": function(exports, require, module) {
 
   Application = {
     initialize: function(onSuccess) {
-      var Router, utils;
+      var Router;
       Router = require('lib/router');
-      utils = require('lib/utils');
       this.views = {};
       this.router = new Router();
       Backbone.history.start({
@@ -96,11 +95,9 @@ window.require.define({"application": function(exports, require, module) {
 }});
 
 window.require.define({"collections/battles": function(exports, require, module) {
-  var Battle, Battles, Collection,
+  var Battle, Battles,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Collection = require('./collection');
 
   Battle = require('../models/battle');
 
@@ -118,28 +115,9 @@ window.require.define({"collections/battles": function(exports, require, module)
 
     return Battles;
 
-  })(Collection);
+  })(Backbone.Collection);
 
   module.exports = Battles;
-  
-}});
-
-window.require.define({"collections/collection": function(exports, require, module) {
-  var Collection,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  module.exports = Collection = (function(_super) {
-
-    __extends(Collection, _super);
-
-    function Collection() {
-      return Collection.__super__.constructor.apply(this, arguments);
-    }
-
-    return Collection;
-
-  })(Backbone.Collection);
   
 }});
 
@@ -147,79 +125,42 @@ window.require.define({"initialize": function(exports, require, module) {
   
   window.app = require('application');
 
-  console.log('----starting up----');
-
   $(function() {
-    var _this = this;
-    return app.initialize(function() {
-      return console.log('success');
-    });
+    return app.initialize(function() {});
   });
   
 }});
 
 window.require.define({"lib/router": function(exports, require, module) {
-  var CreateView, IndexView, Router, app, utils,
+  var IndexView, Router, app,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   app = require('application');
 
-  utils = require('lib/utils');
-
   IndexView = require('views/index');
-
-  CreateView = require('views/create');
 
   module.exports = Router = (function(_super) {
 
     __extends(Router, _super);
 
     function Router() {
-      this._closeViews = __bind(this._closeViews, this);
-
-      this.create = __bind(this.create, this);
-
       this.index = __bind(this.index, this);
       return Router.__super__.constructor.apply(this, arguments);
     }
 
     Router.prototype.routes = {
-      '': 'index',
-      'create': 'create'
+      '*route': 'index'
     };
 
     Router.prototype.index = function() {
-      this._closeViews();
       return app.views.indexView = new IndexView();
-    };
-
-    Router.prototype.create = function() {
-      this._closeViews();
-      return app.views.createView = new CreateView();
-    };
-
-    Router.prototype._closeViews = function() {
-      var key, view, _ref;
-      _ref = app.views;
-      for (key in _ref) {
-        view = _ref[key];
-        delete app.views[key];
-        view.close();
-      }
-      return this;
     };
 
     return Router;
 
   })(Backbone.Router);
-  
-}});
-
-window.require.define({"lib/utils": function(exports, require, module) {
-  
-  module.exports = {};
   
 }});
 
@@ -316,17 +257,19 @@ window.require.define({"lib/view_helper": function(exports, require, module) {
 }});
 
 window.require.define({"models/battle": function(exports, require, module) {
-  var Battle, Model,
+  var Backbone, Battle,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Model = require('./model');
+  Backbone = this.Backbone || require('../../vendor/scripts/backbone');
 
   Battle = (function(_super) {
 
     __extends(Battle, _super);
 
     function Battle() {
+      this.close = __bind(this.close, this);
       return Battle.__super__.constructor.apply(this, arguments);
     }
 
@@ -344,108 +287,16 @@ window.require.define({"models/battle": function(exports, require, module) {
       };
     };
 
-    return Battle;
-
-  })(Model);
-
-  module.exports = Battle;
-  
-}});
-
-window.require.define({"models/model": function(exports, require, module) {
-  var Backbone, Model,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Backbone = this.Backbone || require('../../vendor/scripts/backbone');
-
-  module.exports = Model = (function(_super) {
-
-    __extends(Model, _super);
-
-    function Model() {
-      this.close = __bind(this.close, this);
-      return Model.__super__.constructor.apply(this, arguments);
-    }
-
-    Model.prototype.close = function() {
+    Battle.prototype.close = function() {
       this.unbind();
       return typeof this.onClose === "function" ? this.onClose() : void 0;
     };
 
-    return Model;
+    return Battle;
 
   })(Backbone.Model);
-  
-}});
 
-window.require.define({"views/create": function(exports, require, module) {
-  var Battle, CreateView, View, app,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  app = require('application');
-
-  View = require('./view');
-
-  Battle = require('models/battle');
-
-  CreateView = (function(_super) {
-
-    __extends(CreateView, _super);
-
-    function CreateView() {
-      this.create = __bind(this.create, this);
-
-      this.afterRender = __bind(this.afterRender, this);
-
-      this.initialize = __bind(this.initialize, this);
-      return CreateView.__super__.constructor.apply(this, arguments);
-    }
-
-    CreateView.prototype.el = '.main-page';
-
-    CreateView.prototype.template = require('./templates/create');
-
-    CreateView.prototype.events = {
-      'click #create': 'create'
-    };
-
-    CreateView.prototype.initialize = function() {
-      return this.render();
-    };
-
-    CreateView.prototype.afterRender = function() {
-      return this.$('#config').text("{\n    \"name\": \"<BATTLE NAME>\",\n    \"criteria\": [\n        {\"<CRITERIA NAME>\": \"<DESCRIPTION OF CRITERIA>\"}\n    ],\n    \"contenders\": [\n        {\n            \"name\": \"<CONTENDER NAME>\",\n            \"criteria\": [\n                {\"<CRITERIA NAME>\": <RATING>}\n            ]\n        }\n    ],\n    \"winner\": \"<WINNER NAME>\",\n    \"explanation\": [\n        {\"bash\": \"<EXPLANATION>\"},\n        {\"jay\": \"<EXPLANATION>\"}\n    ]\n}");
-    };
-
-    CreateView.prototype.create = function(event) {
-      var battle, json,
-        _this = this;
-      event.preventDefault();
-      event.stopPropagation();
-      json = JSON.parse(this.$('#config').val());
-      battle = new Battle();
-      console.log(battle);
-      return battle.save(json, {
-        success: function() {
-          _this.$('#error').hide();
-          return _this.$('#success').slideDown(500);
-        },
-        error: function() {
-          _this.$('#error').slideDown(500);
-          return _this.$('#success').hide();
-        }
-      });
-    };
-
-    return CreateView;
-
-  })(View);
-
-  module.exports = CreateView;
+  module.exports = Battle;
   
 }});
 
@@ -856,15 +707,6 @@ window.require.define({"views/templates/battle": function(exports, require, modu
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n    <div class=\"clear\"></div>\n</div>\n";
     return buffer;});
-}});
-
-window.require.define({"views/templates/create": function(exports, require, module) {
-  module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var foundHelper, self=this;
-
-
-    return "<div id=\"create-view\">\n    <div class=\"title\">\n        <h1>Create yo shiz</h1>\n        <h3>It better be proper JSON...</h3>\n    </div>\n\n    <textarea id=\"config\" rows=\"10\" />\n    <div id=\"create-wrap\">\n        <div id=\"create-inner\">\n            <a id=\"create\" class=\"btn-primary btn-large\" href=\"#\" >Create</a>\n        </div>\n\n        <div id=\"success\" class=\"alert alert-success\">S'all good brotha, I gotchu. Save successful.</div>\n        <div id=\"error\" class=\"alert alert-error\">Whoops, something went down. Check the logs.</div>\n    </div>\n</div>";});
 }});
 
 window.require.define({"views/templates/index": function(exports, require, module) {

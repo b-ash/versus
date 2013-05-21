@@ -1,8 +1,7 @@
-Collection = require './collection'
 Battle = require '../models/battle'
 
 
-class Battles extends Collection
+class Battles extends Backbone.Collection
     url: 'api/v1/battles/'
     model: Battle
 

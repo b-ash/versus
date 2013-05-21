@@ -19,7 +19,7 @@ exports.startServer = (port, path, callback) ->
     # Serve our static assets
     app.use express.static("#{__dirname}/#{path}")
     app.get "/api/v1/battles/", (req, res) ->
-        res.json 
+        res.json data
 
     # Serve it up!
     app.listen port, -> 

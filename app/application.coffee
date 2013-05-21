@@ -1,7 +1,6 @@
 Application =
     initialize: (onSuccess) ->
         Router = require 'lib/router'
-        utils = require 'lib/utils'
 
         # Populated in router
         @views = {}

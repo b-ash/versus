@@ -32,7 +32,7 @@ exports.config =
             defaultExtension: 'hbs'
             joinTo: 'static/js/app.js'
 
-    minify: no
+    minify: yes
 
     server:
         path: 'app.coffee'
