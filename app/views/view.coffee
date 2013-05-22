@@ -1,4 +1,3 @@
-utils = require 'lib/utils'
 app = require 'application'
 require 'lib/view_helper'
 
