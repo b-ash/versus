@@ -1,4 +1,4 @@
 window.app = require 'application'
 
 $ ->
-    app.initialize ->
+    app.initialize()

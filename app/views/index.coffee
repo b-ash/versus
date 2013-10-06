@@ -1,6 +1,8 @@
 View = require './view'
 Battles = require '../collections/battles'
 
+app = window.app
+
 class IndexView extends View
     el: '.main-page'
     views: []
@@ -11,11 +13,7 @@ class IndexView extends View
 
     initialize: =>
         @collection = new Battles()
-        @collection.fetch 
-            success: (data, textstatus, xhr) =>
-                @render()
-            error: ->
-                console.log 'Something happened fetching battles'
+        @collection.fetch {success: @render}
 
     afterRender: =>
         @initEls().initScrollers().initBattles {success: @initBattles}
@@ -39,10 +37,9 @@ class IndexView extends View
         @
 
     initBattles: (args) =>
-        console.log @collection.toJSON()
         @collection.each (battle) =>
             view = new BattleView {model: battle}
-            app.views.indexView.views.push view
+            @views.push view
             @$('#list').append view.render().el
             view.trigger 'slider'
         @
@@ -104,13 +101,13 @@ class BattleView extends View
             $el.parent().css 'z-index', 1
             $el.animate {height: 325, width: 325, left: '-=50', top: '-=50'}, 'fast'
         , () -> # hover out
-            $el = $ this 
+            $el = $ this
             $el.animate {height: 225, width: 225, left: '+=50', top: '+=50'}, 'fast', ->
                 $el.parent().css 'z-index', 0
         )
 
         $pics.each (index, el) ->
-            $el = $ el 
+            $el = $ el
             setTimeout () ->
                 pos = $el.position()
                 $el.css {position: 'absolute', left: pos.left, top: pos.top}

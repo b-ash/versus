@@ -8,7 +8,7 @@ Application =
         Backbone.history.start
             pushState: true
 
-        onSuccess()
-    
+        onSuccess?()
+
 
 module.exports = Application
